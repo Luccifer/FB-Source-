@@ -1,0 +1,211 @@
+There were 2 failures:
+
+1) GatekeeperResultsTest::testBeforeClear
+Returned wrong set of checked results before clearing caches
+Failed asserting that two arrays are equal.
+--- Expected
++++ Actual
+@@ @@
+ Array
+ (
++    [499016565] => Array
++        (
++            [test_user_gate] => 0
++            [test_gate_off] => 0
++            [test_exceptions] => 0
++            [test_all_users] => 1
++        )
++
++    [0] => Array
++        (
++            [test_user_gate] => 0
++            [__test__zero_percent] => 0
++            [__test__personal_user_only] => 0
++            [__test__account_based] => 0
++            [__test__off] => 0
++            [test_all_users] => 1
++            [eagleeye_nectar] => 1
++            [__test__exclude_user] => 1
++            [__test__percentage] => 1
++        )
++
+     [499016564] => Array
+         (
++            [test_app_only] => 0
+             [test_gate_off] => 0
++            [test_last_group] => 0
++            [__test__empty_groups2] => 0
++            [test_user_gate] => 1
+             [test_all_users] => 1
++            [test_exceptions] => 1
++            [__test__empty_groups] => 1
++        )
++
++    [35881366586] => Array
++        (
++            [test_gate_off] => 0
++            [test_app_only] => 1
++        )
++
++    [499094456] => Array
++        (
++            [__test__groups] => 0
++            [__test__percentage] => 1
++        )
++
++    [1242318] => Array
++        (
++            [__test__groups] => 0
++        )
++
++    [499800704] => Array
++        (
++            [__test__zero_percent] => 0
++            [test_all_users] => 1
++            [__test__personal_user_only] => 1
++            [__test__account_based] => 1
++        )
++
++    [132825586775443] => Array
++        (
++            [__test__zero_percent] => 0
++            [__test__personal_user_only] => 0
++            [__test__account_based] => 1
++            [test_all_users] => 1
++        )
++
++    [foo] => Array
++        (
++            [__test__zero_percent] => 0
++            [__test__off] => 0
++            [test_all_users] => 1
++        )
++
++    [-1] => Array
++        (
++            [__test__zero_percent] => 0
++            [__test__off] => 0
++            [test_all_users] => 1
++        )
++
++    [499094455] => Array
++        (
++            [__test__percentage] => 1
++            [__test__groups] => 1
++        )
++
++    [499800784] => Array
++        (
++            [test_last_group] => 1
+         )
+ 
+ )
+
+/data/users/rothbart/www-git/flib/gatekeeper/__tests__/GatekeeperResultsTest.php:43
+
+2) GatekeeperResultsTest::testAfterClear
+Returned wrong set of checked results after clearing caches
+Failed asserting that two arrays are equal.
+--- Expected
++++ Actual
+@@ @@
+ Array
+ (
++    [499016565] => Array
++        (
++            [test_user_gate] => 0
++            [test_gate_off] => 0
++            [test_exceptions] => 0
++            [test_all_users] => 1
++        )
++
++    [0] => Array
++        (
++            [test_user_gate] => 0
++            [__test__zero_percent] => 0
++            [__test__personal_user_only] => 0
++            [__test__account_based] => 0
++            [__test__off] => 0
++            [test_all_users] => 1
++            [eagleeye_nectar] => 1
++            [__test__exclude_user] => 1
++            [__test__percentage] => 1
++        )
++
+     [499016564] => Array
+         (
++            [test_app_only] => 0
+             [test_gate_off] => 0
++            [test_last_group] => 0
++            [__test__empty_groups2] => 0
++            [test_user_gate] => 1
+             [test_all_users] => 1
++            [test_exceptions] => 1
++            [__test__empty_groups] => 1
+         )
+ 
+-    [499016565] => Array
++    [35881366586] => Array
+         (
+             [test_gate_off] => 0
++            [test_app_only] => 1
++        )
++
++    [499094456] => Array
++        (
++            [__test__groups] => 0
++            [__test__percentage] => 1
++        )
++
++    [1242318] => Array
++        (
++            [__test__groups] => 0
++        )
++
++    [499800704] => Array
++        (
++            [__test__zero_percent] => 0
+             [test_all_users] => 1
++            [__test__personal_user_only] => 1
++            [__test__account_based] => 1
++        )
++
++    [132825586775443] => Array
++        (
++            [__test__zero_percent] => 0
++            [__test__personal_user_only] => 0
++            [__test__account_based] => 1
++            [test_all_users] => 1
++        )
++
++    [foo] => Array
++        (
++            [__test__zero_percent] => 0
++            [__test__off] => 0
++            [test_all_users] => 1
++        )
++
++    [-1] => Array
++        (
++            [__test__zero_percent] => 0
++            [__test__off] => 0
++            [test_all_users] => 1
++        )
++
++    [499094455] => Array
++        (
++            [__test__percentage] => 1
++            [__test__groups] => 1
++        )
++
++    [499800784] => Array
++        (
++            [test_last_group] => 1
+         )
+ 
+ )
+
+/data/users/rothbart/www-git/flib/gatekeeper/__tests__/GatekeeperResultsTest.php:71
+
+FAILURES!
+Tests: 33, Assertions: 161, Failures: 2.

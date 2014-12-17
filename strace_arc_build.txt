@@ -1,0 +1,162 @@
+[darshan@devrs329 ~/www] strace arc build
+execve("/home/engshare/devtools/facebook/bin/arc", ["arc", "build"], [/* 30 vars */]) = 0
+brk(0)                                  = 0x8c3000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff10f3b1000
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff10f3b0000
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
+open("/etc/ld.so.cache", O_RDONLY)      = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=79127, ...}) = 0
+mmap(NULL, 79127, PROT_READ, MAP_PRIVATE, 3, 0) = 0x7ff10f39c000
+close(3)                                = 0
+open("/lib64/libtermcap.so.2", O_RDONLY) = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0@\17\340\2443\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=15584, ...}) = 0
+mmap(0x33a4e00000, 2108688, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x33a4e00000
+mprotect(0x33a4e03000, 2093056, PROT_NONE) = 0
+mmap(0x33a5002000, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x33a5002000
+close(3)                                = 0
+open("/lib64/libdl.so.2", O_RDONLY)     = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\20\16 \2443\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=23360, ...}) = 0
+mmap(0x33a4200000, 2109696, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x33a4200000
+mprotect(0x33a4202000, 2097152, PROT_NONE) = 0
+mmap(0x33a4402000, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x2000) = 0x33a4402000
+close(3)                                = 0
+open("/lib64/libc.so.6", O_RDONLY)      = 3
+read(3, "\177ELF\2\1\1\0\0\0\0\0\0\0\0\0\3\0>\0\1\0\0\0\260\331\341\2433\0\0\0"..., 832) = 832
+fstat(3, {st_mode=S_IFREG|0755, st_size=1704256, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff10f39b000
+mmap(0x33a3e00000, 3485944, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) = 0x33a3e00000
+mprotect(0x33a3f4a000, 2097152, PROT_NONE) = 0
+mmap(0x33a414a000, 20480, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x14a000) = 0x33a414a000
+mmap(0x33a414f000, 16632, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) = 0x33a414f000
+close(3)                                = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff10f39a000
+arch_prctl(ARCH_SET_FS, 0x7ff10f39a6e0) = 0
+mprotect(0x33a4402000, 4096, PROT_READ) = 0
+mprotect(0x33a414a000, 16384, PROT_READ) = 0
+mprotect(0x33a381a000, 4096, PROT_READ) = 0
+munmap(0x7ff10f39c000, 79127)           = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/dev/tty", O_RDWR|O_NONBLOCK)     = 3
+close(3)                                = 0
+brk(0)                                  = 0x8c3000
+brk(0x8e4000)                           = 0x8e4000
+open("/usr/lib/locale/locale-archive", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/share/locale/locale.alias", O_RDONLY) = 3
+fstat(3, {st_mode=S_IFREG|0644, st_size=2528, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff10f3af000
+read(3, "# Locale name alias data base.\n#"..., 4096) = 2528
+read(3, "", 4096)                       = 0
+close(3)                                = 0
+munmap(0x7ff10f3af000, 4096)            = 0
+open("/usr/lib/locale/en_US.UTF-8/LC_IDENTIFICATION", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/lib/locale/en_US.utf8/LC_IDENTIFICATION", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/lib/locale/en_US/LC_IDENTIFICATION", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/lib/locale/en.UTF-8/LC_IDENTIFICATION", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/lib/locale/en.utf8/LC_IDENTIFICATION", O_RDONLY) = -1 ENOENT (No such file or directory)
+open("/usr/lib/locale/en/LC_IDENTIFICATION", O_RDONLY) = -1 ENOENT (No such file or directory)
+getuid()                                = 5163
+getgid()                                = 100
+geteuid()                               = 5163
+getegid()                               = 100
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/proc/meminfo", O_RDONLY)         = 3
+fstat(3, {st_mode=S_IFREG|0444, st_size=0, ...}) = 0
+mmap(NULL, 4096, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) = 0x7ff10f3af000
+read(3, "MemTotal:       65077020 kB\nMemF"..., 1024) = 1024
+close(3)                                = 0
+munmap(0x7ff10f3af000, 4096)            = 0
+rt_sigaction(SIGCHLD, {SIG_DFL}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGCHLD, {SIG_DFL}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGQUIT, {SIG_DFL}, {SIG_DFL}, 8) = 0
+rt_sigaction(SIGQUIT, {SIG_DFL}, {SIG_DFL}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigaction(SIGQUIT, {SIG_IGN}, {SIG_DFL}, 8) = 0
+uname({sys="Linux", node="devrs329.snc6.facebook.com", ...}) = 0
+stat("/home/darshan/www", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+stat(".", {st_mode=S_IFDIR|0755, st_size=4096, ...}) = 0
+getpid()                                = 15792
+getppid()                               = 15791
+getpgrp()                               = 15791
+rt_sigaction(SIGCHLD, {0x436080, [], SA_RESTORER, 0x33a3e301b0}, {SIG_DFL}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+open("/home/engshare/devtools/facebook/bin/arc", O_RDONLY) = 3
+ioctl(3, SNDCTL_TMR_TIMEBASE or TCGETS, 0x7ffff9af92d0) = -1 ENOTTY (Inappropriate ioctl for device)
+lseek(3, 0, SEEK_CUR)                   = 0
+read(3, "#!/bin/sh\n\n# set some useful stu"..., 80) = 80
+lseek(3, 0, SEEK_SET)                   = 0
+getrlimit(RLIMIT_NOFILE, {rlim_cur=65535, rlim_max=65535}) = 0
+dup2(3, 255)                            = 255
+close(3)                                = 0
+fcntl(255, F_SETFD, FD_CLOEXEC)         = 0
+fcntl(255, F_GETFL)                     = 0x8000 (flags O_RDONLY|O_LARGEFILE)
+fstat(255, {st_mode=S_IFREG|0755, st_size=799, ...}) = 0
+lseek(255, 0, SEEK_CUR)                 = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "#!/bin/sh\n\n# set some useful stu"..., 799) = 799
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -694, SEEK_CUR)              = 105
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7ff10f39a770) = 15793
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x436080, [], SA_RESTORER, 0x33a3e301b0}, {0x436080, [], SA_RESTORER, 0x33a3e301b0}, 8) = 0
+close(4)                                = 0
+read(3, "devrs329.snc6\n", 128)         = 14
+read(3, "", 128)                        = 0
+--- SIGCHLD (Child exited) @ 0 (0) ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 15793
+wait4(-1, 0x7ffff9af8c84, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn(0)                         = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x436c60, [], SA_RESTORER, 0x33a3e301b0}, {SIG_DFL}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL}, {0x436c60, [], SA_RESTORER, 0x33a3e301b0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "entities=\"$entities devtools.$US"..., 799) = 694
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+pipe([3, 4])                            = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+lseek(255, -605, SEEK_CUR)              = 194
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7ff10f39a770) = 15796
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGCHLD, {0x436080, [], SA_RESTORER, 0x33a3e301b0}, {0x436080, [], SA_RESTORER, 0x33a3e301b0}, 8) = 0
+close(4)                                = 0
+read(3, "www\n", 128)                   = 4
+read(3, "", 128)                        = 0
+--- SIGCHLD (Child exited) @ 0 (0) ---
+wait4(-1, [{WIFEXITED(s) && WEXITSTATUS(s) == 0}], WNOHANG, NULL) = 15796
+wait4(-1, 0x7ffff9af8c84, WNOHANG, NULL) = -1 ECHILD (No child processes)
+rt_sigreturn(0)                         = 0
+close(3)                                = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x436c60, [], SA_RESTORER, 0x33a3e301b0}, {SIG_DFL}, 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigaction(SIGINT, {SIG_DFL}, {0x436c60, [], SA_RESTORER, 0x33a3e301b0}, 8) = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+read(255, "key=\"phabricator.arc.$repo.$1\"\n\n"..., 799) = 605
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, NULL, [], 8)  = 0
+rt_sigprocmask(SIG_BLOCK, [INT CHLD], [], 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [INT CHLD], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [INT CHLD], NULL, 8) = 0
+lseek(255, -452, SEEK_CUR)              = 347
+clone(child_stack=0, flags=CLONE_CHILD_CLEARTID|CLONE_CHILD_SETTID|SIGCHLD, child_tidptr=0x7ff10f39a770) = 15801
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigprocmask(SIG_SETMASK, [], NULL, 8) = 0
+rt_sigprocmask(SIG_BLOCK, [CHLD], [], 8) = 0
+rt_sigaction(SIGINT, {0x436c60, [], SA_RESTORER, 0x33a3e301b0}, {SIG_DFL}, 8) = 0
+wait4(-1,

@@ -1,0 +1,41 @@
+
+
+diff --git a/flib/entity/user/personal/EntPersonalUser.php b/flib/entity/user/personal/EntPersonalUser.php
+index 4de7ad8..439c162 100644
+--- a/flib/entity/user/personal/EntPersonalUser.php
++++ b/flib/entity/user/personal/EntPersonalUser.php
+@@ -306,13 +306,15 @@ class EntPersonalUser extends EntProfile
+
+   public function prepareFriendIDs() {
+     require_module_lazy('friends');
+-    // TODO: add privacy checks!
+     DT('ReciprocalFriends')->add($this->id);
+     return null;
+   }
+
+   public function getFriendIDs() {
+-    return DT('ReciprocalFriends')->get($this->id);
++    if ($this->canSeeFriends()) {
++      return DT('ReciprocalFriends')->get($this->id);
++    }
++    return array();
+   }
+
+   /**
+@@ -397,6 +399,7 @@ class EntPersonalUser extends EntProfile
+       $this->viewerCanSee,
+       array(
+         PrivacyConcepts::EXISTENCE,
++        PrivacyConcepts::FRIENDS,
+         // Note that we're fetching GENDER here because it's PAI
+         // so it's cheap and because we don't want to add a prepareGender
+         // call here if we don't have to.
+@@ -418,6 +421,10 @@ class EntPersonalUser extends EntProfile
+     return must_prepare($this->viewerCanSee)->canSee();
+   }
+
++  protected function canSeeFriends() {
++    return must_prepare($this->viewerCanSee)->canSeeFriends();
++  }
++
+

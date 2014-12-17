@@ -1,0 +1,18 @@
+Index: flib/core/db/queryf.php
+===================================================================
+--- flib/core/db/queryf.php
++++ flib/core/db/queryf.php
+@@ -1104,11 +1104,12 @@
+  *  @author rmcelroy
+  */
+ function mysql_query_all($sql, $ok_sql, $conn, $params) {
++  FBTraceDB::rqsend($ok_sql);
+   switch (SQLQueryType::parse($sql)) {
+     case SQLQueryType::READ:
+       $t_start = microtime(true);
+       $result = mysql_query_read($ok_sql, $conn);
+       $t_end = microtime(true);
+       $t_delta = $t_end - $t_start;
+       if ($t_delta > ProfilingThresholds::$queryReadDuration) {
+         ProfilingThresholds::recordDurationError('mysql.queryReadDuration',
+

@@ -1,0 +1,52 @@
+[emir@dev3003 ~/devtools/libphutil] arc diff --trace
+>>> [0] <conduit> conduit.connect()
+<<< [0] <conduit> 98,172 us
+>>> [1] <exec> $ (cd '/home/emir/devtools/libphutil'; git rev-parse --show-cdup)
+<<< [1] <exec> 13,629 us
+>>> [2] <exec> $ (cd '/home/emir/devtools/libphutil/'; git rev-parse --verify HEAD^)
+<<< [2] <exec> 17,024 us
+>>> [3] <exec> $ (cd '/home/emir/devtools/libphutil/'; git diff --no-ext-diff --no-textconv --raw 'HEAD^' --)
+>>> [4] <exec> $ (cd '/home/emir/devtools/libphutil/'; git diff --no-ext-diff --no-textconv --raw HEAD --)
+>>> [5] <exec> $ (cd '/home/emir/devtools/libphutil/'; git ls-files --others --exclude-standard)
+>>> [6] <exec> $ (cd '/home/emir/devtools/libphutil/'; git ls-files -m)
+<<< [5] <exec> 73,004 us
+<<< [6] <exec> 74,084 us
+<<< [4] <exec> 77,907 us
+<<< [3] <exec> 80,606 us
+>>> [7] <exec> $ (cd '/home/emir/devtools/libphutil/'; git log --first-parent --format=medium 'HEAD^'..HEAD)
+<<< [7] <exec> 16,390 us
+>>> [8] <conduit> differential.parsecommitmessage()
+<<< [8] <conduit> 106,631 us
+Linting...
+>>> [9] <exec> $ (cd '/home/emir/devtools/libphutil'; git rev-parse --show-cdup)
+<<< [9] <exec> 9,976 us
+>>> [10] <exec> $ (cd '/home/emir/devtools/libphutil/'; git merge-base 'HEAD^' HEAD)
+<<< [10] <exec> 13,472 us
+>>> [11] <exec> $ (cd '/home/emir/devtools/libphutil/'; git diff --no-ext-diff --no-textconv --raw '00645a0aec09edc7f0f1f573032991ae94faa01b' --)
+>>> [12] <exec> $ (cd '/home/emir/devtools/libphutil/'; git diff --no-ext-diff --no-textconv --raw HEAD --)
+>>> [13] <exec> $ (cd '/home/emir/devtools/libphutil/'; git ls-files --others --exclude-standard)
+>>> [14] <exec> $ (cd '/home/emir/devtools/libphutil/'; git ls-files -m)
+<<< [11] <exec> 19,092 us
+<<< [14] <exec> 15,219 us
+<<< [12] <exec> 21,602 us
+<<< [13] <exec> 43,139 us
+>>> [15] <exec> $ (cd '/home/emir/devtools/libphutil/'; git diff --no-ext-diff --no-textconv -M -C --no-color --src-prefix=a/ --dst-prefix=b/ -U32767 '00645a0aec09edc7f0f1f573032991ae94faa01b' --)
+<<< [15] <exec> 28,318 us
+>>> [16] <exec> $ '/home/engshare/devtools/libphutil/src/parser/xhpast/bin/xhpast' --version
+<<< [16] <exec> 11,420 us
+>>> [17] <exec> $ '/home/engshare/devtools/arcanist/scripts/phutil_analyzer.php' '/home/emir/devtools/libphutil/src/markup/engine/remarkup/markuprule/hyperlink'
+<<< [17] <exec> 490,196 us
+>>> [18] <exec> $ '/home/engshare/devtools/arcanist/scripts/phutil_analyzer.php' '/home/engshare/devtools/libphutil/src/markup'
+>>> [19] <exec> $ '/home/engshare/devtools/arcanist/scripts/phutil_analyzer.php' '/home/engshare/devtools/libphutil/src/markup/engine/remarkup/markuprule/base'
+>>> [20] <exec> $ '/home/engshare/devtools/arcanist/scripts/phutil_analyzer.php' '/home/engshare/devtools/libphutil/src/parser/uri'
+>>> [21] <exec> $ '/home/engshare/devtools/arcanist/scripts/phutil_analyzer.php' '/home/engshare/devtools/libphutil/src/utils'
+<<< [18] <exec> 498,899 us
+<<< [19] <exec> 497,710 us
+<<< [20] <exec> 517,740 us
+<<< [21] <exec> 556,267 us
+>>> [22] <exec> $ '/home/engshare/devtools/libphutil/src/parser/xhpast/bin/xhpast'
+<<< [22] <exec> 10,066 us
+ LINT OKAY  No lint problems.
+Running unit tests...
+HipHop Fatal error: Uncaught exception exception 'PhutilBootloaderException' with message 'The phutil library '' has not been loaded!' in /home/engshare/devtools/libphutil/src/__phutil_library_init__.php:124\nStack trace:\n#0 /home/engshare/devtools/libphutil/src/__phutil_library_init__.php(177): PhutilBootloader->getLibraryRoot()\n#1 /home/engshare/devtools/arcanist/src/unit/engine/phutil/PhutilUnitTestEngine.php(53): PhutilBootloader->moduleExists()\n#2 /home/engshare/devtools/arcanist/src/workflow/unit/ArcanistUnitWorkflow.php(113): PhutilUnitTestEngine->run()\n#3 /home/engshare/devtools/arcanist/src/workflow/diff/ArcanistDiffWorkflow.php(1172): ArcanistUnitWorkflow->run()\n#4 /home/engshare/devtools/arcanist/src/workflow/diff/ArcanistDiffWorkflow.php(225): ArcanistDiffWorkflow->runUnit()\n#5 /home/engshare/devtools/arcanist/scripts/arcanist.php(257): ArcanistDiffWorkflow->run()\n#6 {main}
+

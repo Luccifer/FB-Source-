@@ -1,0 +1,80 @@
+Time: 04:42, Memory: 100.61Mb
+
+There were 4 errors:
+
+1) KnobFBNetApiTest::testGetVipsByLoadBalancers
+KnobException: getVIPsByLoadBalancers : (facebook::jobs::JobException) getVIPsByLoadBalancers
+task=lb01.01.snc4 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.02.snc4 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.03.ash2 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.04.snc4 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb07.01.sf2p : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb12.01.ash4 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb13.02.snc5 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb13.08.ash1 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:40
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:16
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:182
+
+2) KnobFBNetApiTest::testGetPoolsByLoadBalancers
+KnobException: getPoolsByLoadBalancers : (facebook::jobs::JobException) getPoolsByLoadBalancers
+task=lb04.01.snc4 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:94
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:70
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:202
+
+3) KnobFBNetApiTest::testGetVIPsByPools
+KnobException: getVIPsByPools : (facebook::jobs::JobException) getVIPsByPools
+task=intlb01.05.sf2p:build_control.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:csw-unit-2 : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:dhcpd.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:fbalerts-3362.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:intdns-udp.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:mcproxy.05.sf2p.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:splunk-splunktcp-tcp.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:splunk-syslog-udp.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:syslog.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:tps.sf2p.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:csw-unit-1 : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:csw-unit-2 : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:intdns.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:ldap.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:legacy-intdns.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:ntp2.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:smc.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:taoconfig.pl : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.08.ash1:yum.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb02.01.sf2p:SF2P-LDAP-GC.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb04.07.snc1:haystack_pl : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb05.01.snc1:titantest1.smtps.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:148
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:124
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:230
+
+4) KnobFBNetApiTest::testGetPoolsByVIPs
+KnobException: getVIPsByLoadBalancers : (facebook::jobs::JobException) getVIPsByLoadBalancers
+task=lb01.01.ams1 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb04.07.snc1 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:40
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:16
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:250
+
+FAILURES!
+Tests: 23, Assertions: 80, Errors: 4.
+[amukherji@dev1273.snc6 ~/www]$

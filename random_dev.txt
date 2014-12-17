@@ -1,0 +1,15 @@
+[emir:~/go/thrift-upstream/lib/go/test namespace2]$ make check
+mkdir -p gopath/src
+grep -v list.*map.*list.*map ../../../test/ThriftTest.thrift > ThriftTest.thrift
+../../../compiler/cpp/thrift --gen go:thrift_import=thrift -r IncludesTest.thrift
+[WARNING:/home/emir/go/thrift-upstream/lib/go/test/ThriftTest.thrift:41] No generator named 'noexist' could be found!
+[WARNING:/home/emir/go/thrift-upstream/lib/go/test/ThriftTest.thrift:42] cpp generator does not accept 'noexist' as sub-namespace!
+ln -nfs ../../gen-go/ThriftTest gopath/src/ThriftTest
+ln -nfs ../../gen-go/IncludesTest gopath/src/IncludesTest
+ln -nfs ../../../thrift gopath/src/thrift
+touch gopath
+GOPATH=`pwd`/gopath /mnt/vol/engshare/third-party/centos6-native/go/go-1.1.1/da39a3e/bin/go build IncludesTest
+# IncludesTest
+gopath/src/IncludesTest/constants.go:20: undefined: UserId
+gopath/src/IncludesTest/constants.go:21: undefined: MapType
+make: *** [check] Error 2

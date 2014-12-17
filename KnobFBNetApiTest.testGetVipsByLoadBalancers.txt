@@ -1,0 +1,131 @@
+1) KnobFBNetApiTest::testGetVipsByLoadBalancers
+KnobException: getVIPsByLoadBalancers : (facebook::jobs::JobException) getVIPsByLoadBalancers
+task=intlb01.04.snc4 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.11.ash1 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb02.01.snc6 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb04.07.snc1 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb05.07.snc1 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb11.02.ash2 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb11.02.snc4 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb11.05.ash2 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=mlb01.05.snc5 : (facebook::knob::KnobException) getVIPsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:40
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:16
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:182
+
+2) KnobFBNetApiTest::testGetPoolsByLoadBalancers
+KnobException: getPoolsByLoadBalancers : (facebook::jobs::JobException) getPoolsByLoadBalancers
+task=lb01.01.ash1 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.01.snc6 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.02.snc4 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.03.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb02.03.ash1 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb02.05.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb02.07.snc1 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb05.01.snc6 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb10.01.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb10.01.tst1 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb10.03.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb10.04.snc4 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb11.01.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb11.01.ash4 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb11.06.ash1 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb13.02.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb13.07.snc1 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+task=mlb01.06.ash2 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) No more data to read.
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:94
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:70
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:202
+
+3) KnobFBNetApiTest::testGetVIPsByPools
+KnobException: getVIPsByPools : (facebook::jobs::JobException) getVIPsByPools
+task=intlb01.05.sf2p:csw-unit-2 : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb01.05.sf2p:ntp2.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb01.05.sf2p:smc.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb02.01.snc1:test : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb02.01.sf2p:SF2PMX-HTTPS.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb02.01.sf2p:SF2PMX-SMTP.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb02.01.sf2p:themob.02.01.sf2p : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb02.01.sf2p:vthumb.sf2p.pool : (facebook::knob::KnobException) getVIPsByPool : (apache::thrift::transport::TTransportException) No more data to read.
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:148
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:124
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:230
+
+4) KnobFBNetApiTest::testGetPoolsByVIPs
+KnobException: getPoolsByVIPs : (facebook::jobs::JobException) getPoolsByVIPs
+task=intlb01.05.sf2p:fbalerts-3362-01-05.sf2p : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb01.05.sf2p:yum-01-05-sf2p.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb01.08.ash1:intdns-tcp.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb01.08.ash1:tftp_tcp-01-08.ash1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb02.01.snc1:inmail.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb02.01.snc1:test-5555 : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb02.sf2p:distfsd.www.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb02.sf2p:fbaagent : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb02.sf2p:fbaagent-3361 : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=intlb02.sf2p:intdns-udp.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb02.sf2p:intupload.http.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb02.sf2p:lists-int : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=intlb02.sf2p:lite.www.sf2p.http : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.01.ams1:www.01.01.ams1.https.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.01.lhr1:www-01-01-lhr1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.01.snc1:tcp.ns2.tfbnw.net : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.01.snc1:udp.ns2.tfbnw.net : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:atlas-01-05-snc1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:atlas-01-05-snc1.thefacebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:atlas-ssl-01-05-snc1.thefacebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.05.snc1:http.sdevrs106_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:http.sdevrs109_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:https.hdev_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.05.snc1:https.sdev013_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.05.snc1:https.sdev079_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:https.sdevrs002_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.05.snc1:rpc.sdevrs003_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:rpc.sdevrs009_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:rpc.sdevrs011_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.05.snc1:rpc.sdevrs012_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb01.05.snc1:rpc.sdevrs102_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb01.05.snc1:rpc.sdevrs103_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb02.01.sf2p:video-ssl-02-01-sf2p.fbcdn.net : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb03.01.sf2p:profile-03-01-sf2p.facebook.com-ssl_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb03.01.snc1:secure-media-snc1-03-01-snc1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb03.07.snc1:cfs-snc1-vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb04.07.snc1:photocache_vs : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb05.01.sf2p:vupload.facebook.https.vip : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb05.01.snc1:roadblock-05-01-snc1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb05.01.snc1:titantest1-smtps-02-01-snc1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+task=lb05.01.snc1:titantest2-smtp-02-01-snc1.facebook.com : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+task=lb07.01.sf2p:secure-media-snc1-07-01-sf2p.fbcdn.net : (facebook::knob::KnobException) getPoolsByVIP : (apache::thrift::transport::TTransportException) No more data to read.
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:202
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:178
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:257
+
+5) KnobFBNetApiTest::testGetMembersByPools
+KnobException: getPoolsByLoadBalancers : (facebook::jobs::JobException) getPoolsByLoadBalancers
+task=lb12.01.ash4 : (facebook::knob::KnobException) getPoolsByLoadBalancer : (apache::thrift::transport::TTransportException) EAGAIN (timed out)
+
+
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:94
+/data/users/amukherji/www/lib/thrift/packages/knob/knob.Knob.client.php:70
+/data/users/amukherji/www/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:56
+/data/users/amukherji/www/flib/core/smc/smc.php:773
+/data/users/amukherji/www/tests/monitoring/intern/knob/KnobFBNetApiTest.php:297
+
+FAILURES!
+Tests: 23, Assertions: 79, Errors: 5.
+[amukherji@dev1273.snc6 ~/www]$

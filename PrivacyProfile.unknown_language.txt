@@ -1,0 +1,47 @@
+/**
+ * Fetches privacy fields for the user, including fallback logic if the user
+ * does not have settings. It falls back to:
+ * 1. a deprecated privacy field,
+ * 2. the field's default value
+ * 3. closed if the user is a PersonalUser, otherwise open
+ * @see www/flib/privacy/PrivacyBaseProfileDataType.php
+ * @see www/flib/privacy/PrivacyDefaultProfile.php
+ */
+constants PrivacyProfile {
+  RawPrivData fetch_from_db_with_fallbacks(IUser owner, IObject privacy_field) = {
+    GetPrivacyData(owner, privacy_field)
+      if GetPrivacyData(owner, privacy_field) != null;
+
+    else let
+      IObject? fallback_privacy_field =
+        PrivacyDefaultConst::fallback_privacy(privacy_field);
+      RawPrivData? fallback_privacy = fallback_privacy_field != null
+        ? GetPrivacyData(owner, fallback_privacy_field.get)
+        : null;
+    in {
+      fallback_privacy
+        if fallback_privacy != null;
+
+      PrivacyRows::friends
+        if privacy_field in PrivacyDefaultConst::DEFAULT_ALL_FRIENDS;
+
+      PrivacyRows::friends_of_friends
+        if privacy_field in PrivacyDefaultConst::DEFAULT_FRIENDS_OF_FRIENDS;
+
+      PrivacyRows::everyone
+        if privacy_field in PrivacyDefaultConst::DEFAULT_EVERYONE;
+
+      else null;
+    };
+  };
+
+  RawPrivData fetch(IUser owner, IObject privacy_field) =
+   let
+     RawPrivData privacy_row =
+       PrivacyProfile::fetch_from_db_with_fallbacks(owner, privacy_field);
+     RawPrivData scrubbed_privacy_row =
+       PrivacyProfile::remove_networks_from_privacy_row(privacy_row);
+   in {
+     scrubbed_privacy_row if FieldConst::CAN_MESSAGE == privacy_field;
+     else privacy_row;
+   };

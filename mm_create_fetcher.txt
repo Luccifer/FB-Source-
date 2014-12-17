@@ -1,0 +1,43 @@
+fugalh@dev1277.snc6.facebook.com /tmp/foo
+$ mm create fetcher  tarballs archive ~/src/{name}-{revision}
+
+The day will come, my darling, when you will rise again.
+
+    notes:
+    * detect: stash stuff in a sekrit file, or maybe .mm/state
+    
+Actions currently supported by 'tarballs':
+   fetch
+   add
+   remove
+
+
+It worked!  Fetcher added.
+
+Successfully added these projects: tarballs
+fugalh@dev1277.snc6.facebook.com /tmp/foo
+$ mm add -r 1.4.14b-stable libevent
+Couldn't load existing 'libevent', trying to fetch it.
+  tarballs:
+
+Actions currently supported by 'libevent':
+   build
+   add
+   remove
+
+A unit of work--an action performed on a project.
+    
+
+Successfully added these projects: libevent
+fugalh@dev1277.snc6.facebook.com /tmp/foo
+$ mm tag t1
+Checking projects...
+  mm.ArchiveFetcherLoader
+  libevent
+  mm.GitFetcherLoader
+  tarballs
+  mm.SubversionFetcherLoader
+  mm.MercurialFetcherLoader
+Tagging to file 't1'.
+Can't detect fetcher for libevent!
+

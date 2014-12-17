@@ -1,0 +1,31 @@
+[shohoudy@shohoudy-mbp ~/www] ping dev3044.snc6.facebook.com
+PING dev3044.snc6.facebook.com (10.47.15.59): 56 data bytes
+64 bytes from 10.47.15.59: icmp_seq=0 ttl=247 time=2.712 ms
+64 bytes from 10.47.15.59: icmp_seq=1 ttl=247 time=5.187 ms
+64 bytes from 10.47.15.59: icmp_seq=2 ttl=247 time=5.328 ms
+64 bytes from 10.47.15.59: icmp_seq=3 ttl=247 time=5.515 ms
+64 bytes from 10.47.15.59: icmp_seq=4 ttl=247 time=23.956 ms
+64 bytes from 10.47.15.59: icmp_seq=5 ttl=247 time=7.047 ms
+64 bytes from 10.47.15.59: icmp_seq=6 ttl=247 time=4.201 ms
+64 bytes from 10.47.15.59: icmp_seq=7 ttl=247 time=6.106 ms
+64 bytes from 10.47.15.59: icmp_seq=8 ttl=247 time=5.505 ms
+64 bytes from 10.47.15.59: icmp_seq=9 ttl=247 time=5.283 ms
+64 bytes from 10.47.15.59: icmp_seq=10 ttl=247 time=5.372 ms
+64 bytes from 10.47.15.59: icmp_seq=11 ttl=247 time=5.747 ms
+64 bytes from 10.47.15.59: icmp_seq=12 ttl=247 time=5.183 ms
+64 bytes from 10.47.15.59: icmp_seq=13 ttl=247 time=5.388 ms
+64 bytes from 10.47.15.59: icmp_seq=14 ttl=247 time=5.900 ms
+64 bytes from 10.47.15.59: icmp_seq=15 ttl=247 time=3.352 ms
+64 bytes from 10.47.15.59: icmp_seq=16 ttl=247 time=10.100 ms
+^C
+--- dev3044.snc6.facebook.com ping statistics ---
+17 packets transmitted, 17 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 2.712/6.581/23.956/4.597 ms
+[shohoudy@shohoudy-mbp ~/www] ssh dev3044.snc6.facebook.com
+^C
+[shohoudy@shohoudy-mbp ~/www] ssh -v dev3044.snc6.facebook.com
+OpenSSH_5.6p1, OpenSSL 0.9.8r 8 Feb 2011
+debug1: Reading configuration data /Users/shohoudy/.ssh/config
+debug1: Reading configuration data /etc/ssh_config
+debug1: Applying options for *
+debug1: Connecting to dev3044.snc6.facebook.com [2401:db00:160:200f:face::19:0] port 22.

@@ -1,0 +1,20 @@
+[ksalas@dev578 ~/www] ./scripts/intl/intl_string.php scan .
+Loading modules, hang on...
+Analyzing directory `.'
+Error: Command `ulimit -s 65536 && /mnt/vol/engshare/tools/fbt_extractor -tasks 32 '/data/users/ksalas/www-hg'' failed with error #2:
+stdout:
+
+stderr:
+warning: parsing problem in /data/users/ksalas/www-hg/flib/intern/third-party/phpunit/phpunit/Tests/TextUI/dataprovider-log-xml-isolation.phpt
+warning: parsing problem in /data/users/ksalas/www-hg/flib/intern/third-party/phpunit/phpunit/Tests/TextUI/dataprovider-log-xml.phpt
+warning: parsing problem in /data/users/ksalas/www-hg/flib/intern/third-party/phpunit/phpunit/Tests/TextUI/log-xml.phpt
+warning: parsing problem in /data/users/ksalas/www-hg/scripts/sandcastle/local_testing/script_for_test_commits.php
+warning: parsing problem in /data/users/ksalas/www-hg/lib/arcanist/lint/linter/__tests__/hphpast/php-tags-script.lint-test
+LEXER: unrecognised symbol, in token rule:'
+warning: parsing problem in /data/users/ksalas/www-hg/scripts/intern/test/test.php
+warning: parsing problem in /data/users/ksalas/www-hg/scripts/intern/test/test2.php
+Fatal error: exception Common.Todo
+Fatal error: exception Sys_error("Broken pipe")
+
+
+Type intl_string.php --help to get more information about how to use this script.

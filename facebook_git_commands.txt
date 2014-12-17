@@ -1,0 +1,84 @@
+# update your local master branch
+  git checkout master
+  git pull --rebase
+
+# never do any work on master branch
+# create & switch to new branch instead
+  git checkout -b my_branch
+
+# rebase 'my_branch' onto master
+  git checkout my_branch
+  git rebase master
+
+# list branches
+  git branch
+
+# delete 'my_branch' branch
+  $ git branch -d my_branch
+
+# shows status
+$ git status
+
+stage file, also remove conflict
+  $ git add <file>
+
+revert file to head revision
+  $ git checkout -- <file>
+
+commit change
+  $ git commit -a --amend
+    -a       stages all modified files
+    --amend  overwrites last commit
+
+show all local history (amend commits, branch changes, etc.)
+  $ git reflog
+
+show history (there is lot of options)
+  $ git log
+  $ git log --pretty=oneline --abbrev-commit --author=plamenko
+  $ git log -S"text to search"
+
+show last commit (what is about to be send for diff)
+  $ git show
+
+get the version of the file from the given commit
+  $ git checkout <commit> path/to/file  
+
+fetch & merge
+  $ git pull --rebase
+
+resolving conflicts:
+  use ours:
+    $ git checkout --ours index.html
+  use theirs:
+    $ git checkout --theirs index.html
+
+commit author:
+  $ git config --global user.name "Ognjen Dragoljevic"
+  $ git config --global user.email plamenko@fb.com
+
+  After doing this, you may fix the identity used for this commit with:
+  $ git commit --amend --reset-author
+
+commit template:
+  /mnt/vol/engshare/admin/scripts/templates/git-commit-template.txt
+
+rename a branch:
+  $ git branch -m old_branch new_branch
+
+interactive rebase
+  $ git rebase -i master
+  pick
+  edit
+    make changes
+    ...
+    $ git commit -a --amend
+    $ git rebase --continue
+  exec
+    $ arc diff
+    $ arc amend
+    $ git push --dry-run origin HEAD:master // remove dry-run to do actual push
+    ...
+
+to update commit message in phabricator
+  $ arc diff --verbatim

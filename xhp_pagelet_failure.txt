@@ -1,0 +1,43 @@
+[Fri May 27 14:15:00 2011] [hphp] [15418:5368a940:149:000005] <level:warning> <name:pagelet> Failure preparing pagelet: u089092_11
+From XHPClassException: Exception in class `:ui:selector:base`
+
+/home/mosseri/www/flib/ui/xhp/form/selector/selector.php:68
+
+Multiple selections are not allowed for this instance of ui:selector.
+PrepXHP(0),PrepXHP(0),PrepXHP(-808),
+(Events: <whitebox>)
+(fb_employee: 1)
+(user: 834152 <global_user>)
+(ip: 172.23.13.228)
+(at: www.mosseri.dev1971.facebook.com/)
+(referer: <empty>)
+(agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.71 Safari/534.24)
+(Cluster: snc6c02)
+(Release: )
+(SVN Rev: )
+(Search A/B Test: X)
+(Preparable stack:
+    :fb:privacy:metacomposer-widget (5919): 0
+    :ui:composer:audience-selector (5916): 0
+    :x:frag (5915): 0
+    XHPPageletPreparableWrapper_EXPERIMENTAL (5914): 1)
+trace starts at [/home/mosseri/www/flib/ui/xhp/form/selector/base.php:93]
+    #0 throw(...) called at [/home/mosseri/www/flib/ui/xhp/form/selector/base.php:93]
+    #1 xhp_ui__selector__base->compose() called at [/home/mosseri/www/flib/ui/xhp/core/base.php:238]
+    #2 xhp_ui__base->render() called at [/home/mosseri/www/flib/markup/xhp/core.php:244]
+    #3 xhp_x__composable_element->__render_DO_NOT_CALL_EXCEPT_FROM_PREP_XHP() called at [/home/mosseri/www/flib/markup/xhp/preparer.php:254]
+    #4 PrepXHP->render(object xhp_ui__selector__base) called at [/home/mosseri/www/flib/markup/xhp/preparer.php:315]
+    #5 PrepXHP->processChildren(object xhp_div) called at [/home/mosseri/www/flib/markup/xhp/preparer.php:212]
+    #6 PrepXHP->reduceToPreparables(object xhp_div) called at [/home/mosseri/www/flib/markup/xhp/preparer.php:132]
+    #7 PrepXHP->prepare(1, object Preparer) called at [/home/mosseri/www/flib/core/preparable/Preparable.php:287]
+    #8 Preparable->__doRound() called at [/home/mosseri/www/flib/core/preparable/Preparer.php:398]
+    #9 Preparer->runOneIteration() called at [/home/mosseri/www/flib/core/preparable/Preparer.php:424]
+    #10 Preparer->_go() called at [/home/mosseri/www/flib/core/preparable/Preparer.php:334]
+    #11 Preparer->go() called at [/home/mosseri/www/flib/core/preparable/prep_util.php:28]
+    #12 prepv(Array[1]) called at [/home/mosseri/www/flib/core/preparable/prep_util.php:13]
+    #13 prep(object XHPPageletPreparableWrapper_EXPERIMENTAL) called at [/home/mosseri/www/flib/web/bigpipe/chunked.php:174]
+    #14 PipelinePipe->doRenderPagelets() called at [/home/mosseri/www/flib/web/bigpipe/chunked.php:146]
+    #15 ChunkedPreparablePipe->doRender() called at [/home/mosseri/www/flib/web/bigpipe/base.php:417]
+    #16 BigPipe->render() called at [/home/mosseri/www/html/home.php:728]
+    #17 include("/home/mosseri/www/html/home.php") called at [/home/mosseri/www/html/index.php:94]
+Feedback · Preferences · Console

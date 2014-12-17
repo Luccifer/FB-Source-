@@ -1,0 +1,31 @@
+
+[Fri May 27 14:15:00 2011] [hphp] [15418:5368a940:149:000006] <level:warning> <name:xhp_x__frag> StaticResources [visibility-selector-css, metacomposer-widget-css, UIComposerPrivacyWidget, DynamicIconSelector, Selector] were required when preparing pagelets: [u089092_11]. This can cause delay in delivering them to the client by BigPipe.
+(fb_employee: 1)
+(user: 834152 <global_user>)
+(ip: 172.23.13.228)
+(at: www.mosseri.dev1971.facebook.com/)
+(referer: <empty>)
+(agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_0) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.71 Safari/534.24)
+(Cluster: snc6c02)
+(Release: )
+(SVN Rev: )
+(Search A/B Test: X)
+(Preparable stack:
+    XHPPageletPreparableWrapper_EXPERIMENTAL (5914): 1)
+trace starts at [/home/mosseri/www/flib/core/logger/logger.php:472]
+    #0 debug_rlog(...) called at [/home/mosseri/www/flib/core/logger/logger.php:472]
+    #1 FBDefaultLogMessage->log() called at [/home/mosseri/www/flib/core/logger/logger.php:324]
+    #2 FBLogMessage->warn("StaticResources [%s] were required when preparing pagelets: [%s]. This can cause delay in delivering them to the client by BigPipe.", "visibility-selector-css, metacomposer-widget-css, UIComposerPrivacyWidget, DynamicIconSelector, Selector", "u089092_11") called at [/home/mosseri/www/flib/profiling/pagelet/profiler/PageletBestPracticeChecker.php:99]
+    #3 PageletBestPracticeChecker->onEndBlock(object XHPPagelet_EXPERIMENTAL, "prepare") called at [/home/mosseri/www/flib/core/profiling/observer/base.php:42]
+    #4 Observer->inform("end", "prepare", object XHPPagelet_EXPERIMENTAL) called at [/home/mosseri/www/flib/ui/pagelet/UIPagelet.php:1147]
+    #5 PageletPreparableWrapper->prepare(1, object Preparer) called at [/home/mosseri/www/flib/core/preparable/Preparable.php:287]
+    #6 Preparable->__doRound() called at [/home/mosseri/www/flib/core/preparable/Preparer.php:398]
+    #7 Preparer->runOneIteration() called at [/home/mosseri/www/flib/core/preparable/Preparer.php:424]
+    #8 Preparer->_go() called at [/home/mosseri/www/flib/core/preparable/Preparer.php:334]
+    #9 Preparer->go() called at [/home/mosseri/www/flib/core/preparable/prep_util.php:28]
+    #10 prepv(Array[1]) called at [/home/mosseri/www/flib/core/preparable/prep_util.php:13]
+    #11 prep(object XHPPageletPreparableWrapper_EXPERIMENTAL) called at [/home/mosseri/www/flib/web/bigpipe/chunked.php:174]
+    #12 PipelinePipe->doRenderPagelets() called at [/home/mosseri/www/flib/web/bigpipe/chunked.php:146]
+    #13 ChunkedPreparablePipe->doRender() called at [/home/mosseri/www/flib/web/bigpipe/base.php:417]
+    #14 BigPipe->render() called at [/home/mosseri/www/html/home.php:728]
+    #15 include("/home/mosseri/www/html/home.php") called at [/home/mosseri/www/html/index.php:94

@@ -1,0 +1,243 @@
+
+
+marcel@dev050 ~/xhp/xhp $ make xhpize
+g++ -c -fPIC -g -Wall -O3 -minline-all-stringops -o code_rope.o code_rope.cpp
+`which flex35 2>/dev/null || which flex 2>/dev/null` \
+  -C --header-file=scanner.lex.hpp -o scanner.lex.cpp -d scanner.l
+bison --debug --verbose -d -o parser.yacc.cpp parser.y
+re2c -c -o fastpath.cpp fastpath.re
+g++ -c -fPIC -g -Wall -O3 -minline-all-stringops -o fastpath.o fastpath.cpp
+g++ -c -fPIC -g -Wall -O3 -minline-all-stringops -o scanner.lex.o scanner.lex.cpp
+g++ -c -fPIC -g -Wall -O3 -minline-all-stringops -o parser.yacc.o parser.yacc.cpp
+g++ -c -fPIC -g -Wall -O3 -minline-all-stringops -o xhp_preprocess.o xhp_preprocess.cpp
+scanner.lex.cpp: In function ‘yy_state_type yy_try_NUL_trans(yy_state_type, void*)’:
+scanner.lex.cpp:9669: warning: unused variable ‘yyg’
+ar -crs libxhp.a code_rope.o scanner.lex.o parser.yacc.o fastpath.o xhp_preprocess.o
+g++ -fPIC -g -Wall -O3 -minline-all-stringops -o xhpize xhpize.cpp libxhp.a
+marcel@dev050 ~/xhp/xhp $ cat ~/tfb/flib/ui/xhp/core/base.php | valgrind --db-attach=yes -v --leak-check=full ./xhpize > /dev/null
+==10954== Memcheck, a memory error detector.
+==10954== Copyright (C) 2002-2007, and GNU GPL'd, by Julian Seward et al.
+==10954== Using LibVEX rev 1732, a library for dynamic binary translation.
+==10954== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
+==10954== Using valgrind-3.2.3, a dynamic binary instrumentation framework.
+==10954== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
+==10954==
+--10954-- Command line
+--10954--    ./xhpize
+--10954-- Startup, with flags:
+--10954--    --db-attach=yes
+--10954--    -v
+--10954--    --leak-check=full
+--10954-- Contents of /proc/version:
+--10954--   Linux version 2.6.20-36_fbk (root@dev010.snc1.facebook.com) (gcc version 4.0.2 20051125 (Red Hat 4.0.2-8)) #1 SMP Tue Feb 3 11:45:17 PST 2009
+--10954-- Arch and hwcaps: AMD64, amd64-sse2
+--10954-- Page sizes: currently 4096, max supported 4096
+--10954-- Valgrind library directory: /usr/local/lib/valgrind
+--10954-- Reading syms from /home/marcel/xhp/xhp/xhpize (0x400000)
+--10954-- Reading syms from /usr/local/lib/valgrind/amd64-linux/memcheck (0x38000000)
+--10954--    object doesn't have a dynamic symbol table
+--10954-- Reading syms from /lib64/ld-2.3.5.so (0x3000000000)
+--10954-- Reading suppressions file: /usr/local/lib/valgrind/default.supp
+--10954-- Reading syms from /usr/local/lib/valgrind/amd64-linux/vgpreload_core.so (0x4802000)
+--10954-- Reading syms from /usr/local/lib/valgrind/amd64-linux/vgpreload_memcheck.so (0x4903000)
+--10954-- REDIR: 0x3000013EB0 (index) redirected to 0x4906A30 (index)
+--10954-- REDIR: 0x3000014060 (strcmp) redirected to 0x4906BC0 (strcmp)
+--10954-- REDIR: 0x3000014090 (strlen) redirected to 0x4906AD0 (strlen)
+--10954-- Reading syms from /usr/lib64/libstdc++.so.6.0.5 (0x3002400000)
+--10954--    object doesn't have a symbol table
+--10954-- Reading syms from /lib64/libm-2.3.5.so (0x3000500000)
+--10954-- Reading syms from /lib64/libgcc_s-4.0.1-20050727.so.1 (0x3001800000)
+--10954--    object doesn't have a symbol table
+--10954-- Reading syms from /lib64/libc-2.3.5.so (0x3000200000)
+--10954-- REDIR: 0x3000272690 (rindex) redirected to 0x49068E0 (rindex)
+--10954-- REDIR: 0x3000273650 (memset) redirected to 0x4906D90 (memset)
+--10954-- REDIR: 0x3000272240 (strlen) redirected to 0x4906A90 (strlen)
+--10954-- REDIR: 0x30024BC470 (operator new(unsigned long)) redirected to 0x49050D4 (operator new(unsigned long))
+--10954-- REDIR: 0x3000273D60 (memcpy) redirected to 0x4907330 (memcpy)
+--10954-- REDIR: 0x30024BB268 (operator delete(void*)) redirected to 0x4905C2C (operator delete(void*))
+--10954-- REDIR: 0x300026CCF0 (malloc) redirected to 0x4904CC3 (malloc)
+--10954-- REDIR: 0x30002734B0 (memmove) redirected to 0x4906DC0 (memmove)
+--10954-- REDIR: 0x300026AE10 (free) redirected to 0x490593E (free)
+==10954== Invalid read of size 4
+==10954==    at 0x405B2D: xhp_preprocess(std::string&, std::string&, std::string&, unsigned&, xhp_flags_t const&) (char_traits.h:257)
+==10954==    by 0x406F5E: xhp_preprocess(std::string&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:41)
+==10954==    by 0x407087: xhp_preprocess(std::istream&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:31)
+==10954==    by 0x403745: main (xhpize.cpp:67)
+==10954==  Address 0x4A5A408 is 6,640 bytes inside a block of size 6,641 alloc'd
+==10954==    at 0x4905158: operator new(unsigned long) (vg_replace_malloc.c:167)
+==10954==    by 0x40E4FD: __gnu_cxx::rope<char, __gnu_cxx::__pool_alloc<char> >::c_str() const (rope:1452)
+==10954==    by 0x405AFE: xhp_preprocess(std::string&, std::string&, std::string&, unsigned&, xhp_flags_t const&) (xhp_preprocess.cpp:84)
+==10954==    by 0x406F5E: xhp_preprocess(std::string&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:41)
+==10954==    by 0x407087: xhp_preprocess(std::istream&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:31)
+==10954==    by 0x403745: main (xhpize.cpp:67)
+==10954==
+==10954== ---- Attach to debugger ? --- [Return/N/n/Y/y/C/c] ---- --10954-- REDIR: 0x3000273760 (mempcpy) redirected to 0x49077B0 (mempcpy)
+File `-` xhpized.
+==10954==
+==10954== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 4 from 1)
+==10954==
+==10954== 1 errors in context 1 of 1:
+==10954== Invalid read of size 4
+==10954==    at 0x405B2D: xhp_preprocess(std::string&, std::string&, std::string&, unsigned&, xhp_flags_t const&) (char_traits.h:257)
+==10954==    by 0x406F5E: xhp_preprocess(std::string&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:41)
+==10954==    by 0x407087: xhp_preprocess(std::istream&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:31)
+==10954==    by 0x403745: main (xhpize.cpp:67)
+==10954==  Address 0x4A5A408 is 6,640 bytes inside a block of size 6,641 alloc'd
+==10954==    at 0x4905158: operator new(unsigned long) (vg_replace_malloc.c:167)
+==10954==    by 0x40E4FD: __gnu_cxx::rope<char, __gnu_cxx::__pool_alloc<char> >::c_str() const (rope:1452)
+==10954==    by 0x405AFE: xhp_preprocess(std::string&, std::string&, std::string&, unsigned&, xhp_flags_t const&) (xhp_preprocess.cpp:84)
+==10954==    by 0x406F5E: xhp_preprocess(std::string&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:41)
+==10954==    by 0x407087: xhp_preprocess(std::istream&, std::string&, bool, std::string&, unsigned&) (xhp_preprocess.cpp:31)
+==10954==    by 0x403745: main (xhpize.cpp:67)
+--10954--
+--10954-- supp:    4 dl_relocate_object
+==10954==
+==10954== IN SUMMARY: 1 errors from 1 contexts (suppressed: 4 from 1)
+==10954==
+==10954== malloc/free: in use at exit: 169,476 bytes in 38 blocks.
+==10954== malloc/free: 72 allocs, 34 frees, 222,834 bytes allocated.
+==10954==
+==10954== searching for pointers to 38 not-freed blocks.
+==10954== checked 324,976 bytes.
+==10954==
+==10954== LEAK SUMMARY:
+==10954==    definitely lost: 0 bytes in 0 blocks.
+==10954==      possibly lost: 0 bytes in 0 blocks.
+==10954==    still reachable: 169,476 bytes in 38 blocks.
+==10954==         suppressed: 0 bytes in 0 blocks.
+==10954== Reachable blocks (those to which a pointer was found) are not shown.
+==10954== To see them, rerun with: --leak-check=full --show-reachable=yes
+--10954--  memcheck: sanity checks: 11 cheap, 1 expensive
+--10954--  memcheck: auxmaps: 113 auxmap entries (7232k, 7M) in use
+--10954--  memcheck: auxmaps: 6000065 searches, 6507620 comparisons
+--10954--  memcheck: SMs: n_issued      = 21 (336k, 0M)
+--10954--  memcheck: SMs: n_deissued    = 0 (0k, 0M)
+--10954--  memcheck: SMs: max_noaccess  = 524287 (8388592k, 8191M)
+--10954--  memcheck: SMs: max_undefined = 0 (0k, 0M)
+--10954--  memcheck: SMs: max_defined   = 146 (2336k, 2M)
+--10954--  memcheck: SMs: max_non_DSM   = 21 (336k, 0M)
+--10954--  memcheck: max sec V bit nodes:    1 (0k, 0M)
+--10954--  memcheck: set_sec_vbits8 calls: 4 (new: 1, updates: 3)
+--10954--  memcheck: max shadow mem size:   4480k, 4M
+--10954-- translate:            fast SP updates identified: 4,791 ( 79.6%)
+--10954-- translate:   generic_known SP updates identified: 1,143 ( 19.0%)
+--10954-- translate: generic_unknown SP updates identified: 79 (  1.3%)
+--10954--     tt/tc: 12,011 tt lookups requiring 12,625 probes
+--10954--     tt/tc: 12,011 fast-cache updates, 5 flushes
+--10954--  transtab: new        5,615 (173,638 -> 2,791,973; ratio 160:10) [0 scs]
+--10954--  transtab: dumped     0 (0 -> ??)
+--10954--  transtab: discarded  12 (261 -> ??)
+--10954-- scheduler: 1,146,823 jumps (bb entries).
+--10954-- scheduler: 11/6,600 major/minor sched events.
+--10954--    sanity: 12 cheap, 1 expensive checks.
+--10954--    exectx: 30,011 lists, 80 contexts (avg 0 per list)
+--10954--    exectx: 111 searches, 31 full compares (279 per 1000)
+--10954--    exectx: 54 cmp2, 6 cmp4, 0 cmpAll
+marcel@dev050 ~/xhp/xhp $ vim Makefile
+marcel@dev050 ~/xhp/xhp $ make clean
+rm libxhp.a xhpize parser.yacc.cpp scanner.lex.cpp scanner.lex.hpp parser.yacc.output parser.yacc.hpp fastpath.cpp *.o 2>/dev/null
+marcel@dev050 ~/xhp/xhp $ make xhpize
+g++ -c -fPIC -g -Wall -O3 -o code_rope.o code_rope.cpp
+`which flex35 2>/dev/null || which flex 2>/dev/null` \
+  -C --header-file=scanner.lex.hpp -o scanner.lex.cpp -d scanner.l
+bison --debug --verbose -d -o parser.yacc.cpp parser.y
+re2c -c -o fastpath.cpp fastpath.re
+g++ -c -fPIC -g -Wall -O3 -o fastpath.o fastpath.cpp
+g++ -c -fPIC -g -Wall -O3 -o scanner.lex.o scanner.lex.cpp
+g++ -c -fPIC -g -Wall -O3 -o parser.yacc.o parser.yacc.cpp
+g++ -c -fPIC -g -Wall -O3 -o xhp_preprocess.o xhp_preprocess.cpp
+scanner.lex.cpp: In function ‘yy_state_type yy_try_NUL_trans(yy_state_type, void*)’:
+scanner.lex.cpp:9669: warning: unused variable ‘yyg’
+ar -crs libxhp.a code_rope.o scanner.lex.o parser.yacc.o fastpath.o xhp_preprocess.o
+g++ -fPIC -g -Wall -O3 -o xhpize xhpize.cpp libxhp.a
+marcel@dev050 ~/xhp/xhp $ cat ~/tfb/flib/ui/xhp/core/base.php | valgrind --db-attach=yes -v --leak-check=full ./xhpize > /dev/null
+==11157== Memcheck, a memory error detector.
+==11157== Copyright (C) 2002-2007, and GNU GPL'd, by Julian Seward et al.
+==11157== Using LibVEX rev 1732, a library for dynamic binary translation.
+==11157== Copyright (C) 2004-2007, and GNU GPL'd, by OpenWorks LLP.
+==11157== Using valgrind-3.2.3, a dynamic binary instrumentation framework.
+==11157== Copyright (C) 2000-2007, and GNU GPL'd, by Julian Seward et al.
+==11157==
+--11157-- Command line
+--11157--    ./xhpize
+--11157-- Startup, with flags:
+--11157--    --db-attach=yes
+--11157--    -v
+--11157--    --leak-check=full
+--11157-- Contents of /proc/version:
+--11157--   Linux version 2.6.20-36_fbk (root@dev010.snc1.facebook.com) (gcc version 4.0.2 20051125 (Red Hat 4.0.2-8)) #1 SMP Tue Feb 3 11:45:17 PST 2009
+--11157-- Arch and hwcaps: AMD64, amd64-sse2
+--11157-- Page sizes: currently 4096, max supported 4096
+--11157-- Valgrind library directory: /usr/local/lib/valgrind
+--11157-- Reading syms from /home/marcel/xhp/xhp/xhpize (0x400000)
+--11157-- Reading syms from /usr/local/lib/valgrind/amd64-linux/memcheck (0x38000000)
+--11157--    object doesn't have a dynamic symbol table
+--11157-- Reading syms from /lib64/ld-2.3.5.so (0x3000000000)
+--11157-- Reading suppressions file: /usr/local/lib/valgrind/default.supp
+--11157-- Reading syms from /usr/local/lib/valgrind/amd64-linux/vgpreload_core.so (0x4802000)
+--11157-- Reading syms from /usr/local/lib/valgrind/amd64-linux/vgpreload_memcheck.so (0x4903000)
+--11157-- REDIR: 0x3000013EB0 (index) redirected to 0x4906A30 (index)
+--11157-- REDIR: 0x3000014060 (strcmp) redirected to 0x4906BC0 (strcmp)
+--11157-- REDIR: 0x3000014090 (strlen) redirected to 0x4906AD0 (strlen)
+--11157-- Reading syms from /usr/lib64/libstdc++.so.6.0.5 (0x3002400000)
+--11157--    object doesn't have a symbol table
+--11157-- Reading syms from /lib64/libm-2.3.5.so (0x3000500000)
+--11157-- Reading syms from /lib64/libgcc_s-4.0.1-20050727.so.1 (0x3001800000)
+--11157--    object doesn't have a symbol table
+--11157-- Reading syms from /lib64/libc-2.3.5.so (0x3000200000)
+--11157-- REDIR: 0x3000272690 (rindex) redirected to 0x49068E0 (rindex)
+--11157-- REDIR: 0x3000273650 (memset) redirected to 0x4906D90 (memset)
+--11157-- REDIR: 0x3000272240 (strlen) redirected to 0x4906A90 (strlen)
+--11157-- REDIR: 0x30024BC470 (operator new(unsigned long)) redirected to 0x49050D4 (operator new(unsigned long))
+--11157-- REDIR: 0x3000273D60 (memcpy) redirected to 0x4907330 (memcpy)
+--11157-- REDIR: 0x30024BB268 (operator delete(void*)) redirected to 0x4905C2C (operator delete(void*))
+--11157-- REDIR: 0x300026CCF0 (malloc) redirected to 0x4904CC3 (malloc)
+--11157-- REDIR: 0x30002734B0 (memmove) redirected to 0x4906DC0 (memmove)
+--11157-- REDIR: 0x300026AE10 (free) redirected to 0x490593E (free)
+--11157-- REDIR: 0x3000273760 (mempcpy) redirected to 0x49077B0 (mempcpy)
+File `-` xhpized.
+==11157==
+==11157== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 4 from 1)
+--11157--
+--11157-- supp:    4 dl_relocate_object
+==11157== malloc/free: in use at exit: 169,476 bytes in 38 blocks.
+==11157== malloc/free: 72 allocs, 34 frees, 222,834 bytes allocated.
+==11157==
+==11157== searching for pointers to 38 not-freed blocks.
+==11157== checked 324,976 bytes.
+==11157==
+==11157== LEAK SUMMARY:
+==11157==    definitely lost: 0 bytes in 0 blocks.
+==11157==      possibly lost: 0 bytes in 0 blocks.
+==11157==    still reachable: 169,476 bytes in 38 blocks.
+==11157==         suppressed: 0 bytes in 0 blocks.
+==11157== Reachable blocks (those to which a pointer was found) are not shown.
+==11157== To see them, rerun with: --leak-check=full --show-reachable=yes
+--11157--  memcheck: sanity checks: 11 cheap, 1 expensive
+--11157--  memcheck: auxmaps: 113 auxmap entries (7232k, 7M) in use
+--11157--  memcheck: auxmaps: 6000645 searches, 6509418 comparisons
+--11157--  memcheck: SMs: n_issued      = 21 (336k, 0M)
+--11157--  memcheck: SMs: n_deissued    = 0 (0k, 0M)
+--11157--  memcheck: SMs: max_noaccess  = 524287 (8388592k, 8191M)
+--11157--  memcheck: SMs: max_undefined = 0 (0k, 0M)
+--11157--  memcheck: SMs: max_defined   = 146 (2336k, 2M)
+--11157--  memcheck: SMs: max_non_DSM   = 21 (336k, 0M)
+--11157--  memcheck: max sec V bit nodes:    1 (0k, 0M)
+--11157--  memcheck: set_sec_vbits8 calls: 4 (new: 1, updates: 3)
+--11157--  memcheck: max shadow mem size:   4480k, 4M
+--11157-- translate:            fast SP updates identified: 4,797 ( 79.6%)
+--11157-- translate:   generic_known SP updates identified: 1,143 ( 18.9%)
+--11157-- translate: generic_unknown SP updates identified: 79 (  1.3%)
+--11157--     tt/tc: 11,858 tt lookups requiring 12,418 probes
+--11157--     tt/tc: 11,858 fast-cache updates, 5 flushes
+--11157--  transtab: new        5,608 (173,560 -> 2,788,253; ratio 160:10) [0 scs]
+--11157--  transtab: dumped     0 (0 -> ??)
+--11157--  transtab: discarded  12 (261 -> ??)
+--11157-- scheduler: 1,150,148 jumps (bb entries).
+--11157-- scheduler: 11/6,454 major/minor sched events.
+--11157--    sanity: 12 cheap, 1 expensive checks.
+--11157--    exectx: 30,011 lists, 79 contexts (avg 0 per list)
+--11157--    exectx: 110 searches, 31 full compares (281 per 1000)
+--11157--    exectx: 54 cmp2, 6 cmp4, 0 cmpAll
+marcel@dev050 ~/xhp/xhp $
+

@@ -1,0 +1,184 @@
+cluster_rack  location_id  type         inst_id  data                             created_at                       created_by
+AN            449317       Asset        195416   NULL                             1302052148114                    7104138
+AN            449317       serf.Server  101180   NULL                             1302052148114                    7104138
+to-1          195966       Asset        134685   cab2to.05.ash2.facebook.com      1301635575307                    0
+to-1          195966       Asset        275534   nfshome102.ash2.facebook.com     1285205171896                    0
+to-1          195966       Asset        275546   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275547   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275548   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275549   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275550   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275551   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275552   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        275553   shelf:                           nfsads201.ash2/nfsads202.ash2    1282000354316    0
+to-1          195966       Asset        356315   shelf:                           nfshome101.ash2/nfshome102.ash2  1288740324482    0
+to-1          195966       serf.Device  321367   shelf:                           nfshome101/102                   1301626706996    0
+to-1          195966       serf.Device  321369   shelf:                           nfshome101/102                   501              1301626706996  0
+to-1          195966       serf.Device  321371   shelf:                           nfshome101/102                   1053             1301626706996  0
+to-1          195966       serf.Device  321373   shelf:                           nfshome101/102                   8831             1301626706996  0
+to-1          195966       serf.Device  321375   shelf:                           nfshome101/102                   3483             1301626706996  0
+to-1          195966       serf.Device  321720   nfshome102.ash2.facebook.com     1301635996180                    0
+to-1          195966       serf.Device  321741   shelf:                           nfshome101/102                   9803             1301635996180  0
+to-1          195966       serf.Device  321743   shelf:                           nfshome101/102                   9704             1301635996180  0
+to-1          195966       serf.Device  321745   shelf:                           nfshome101/102                   8646             1301635996180  0
+to-1          195966       serf.Device  332951   shelf:                           nfshome101/102                   1988             1301627784273  0
+to-1          195966       serf.Device  343402   cab2to.05.ash2.facebook.com      1301635608749                    0
+lab1          27120        Asset        30093    evaldb007.snc1.facebook.com      1286665610656                    0
+lab1          27120        Asset        30146    evaldb006.snc1.facebook.com      1286665610656                    0
+lab1          27120        Asset        74804    evaldb005.snc1.facebook.com      1288843992654                    0
+lab1          27120        Asset        74805    evaldb002.snc1.facebook.com      1285206728831                    0
+lab1          27120        Asset        83633    evaldb004.snc1.facebook.com      1281335337425                    0
+lab1          27120        Asset        111193   evaldb009.snc1.facebook.com      1277918063890                    0
+lab1          27120        Asset        111199   evaldb008.snc1.facebook.com      1279300631102                    0
+lab1          27120        Asset        114965   gpgpu001.snc1.facebook.com       1277918233565                    0
+lab1          27120        Asset        114992   gpgpu002.snc1.facebook.com       1279300631102                    0
+lab1          27120        Asset        173916   hadoop20001.snc1.facebook.com    1279300685323                    0
+lab1          27120        Asset        173917   hadoop20002.snc1.facebook.com    1279300685323                    0
+lab1          27120        Asset        196947   hphaytest007.snc1.facebook.com   1279043452986                    0
+lab1          27120        Asset        196951   hpfeedtest001.snc1.facebook.com  1279043452986                    0
+lab1          27120        Asset        419444   udbqa014.snc1.facebook.com       1295915194939                    499800253
+lab1          27120        serf.Server  15698    evaldb007.snc1.facebook.com      1286665622897                    0
+lab1          27120        serf.Server  15751    evaldb006.snc1.facebook.com      1286665622897                    0
+lab1          27120        serf.Server  35176    evaldb005.snc1.facebook.com      1288843993125                    0
+lab1          27120        serf.Server  35177    evaldb002.snc1.facebook.com      1285206861517                    0
+lab1          27120        serf.Server  41389    evaldb004.snc1.facebook.com      1281335525991                    0
+lab1          27120        serf.Server  57514    evaldb009.snc1.facebook.com      1277918194997                    0
+lab1          27120        serf.Server  58937    gpgpu001.snc1.facebook.com       1277918342512                    0
+lab1          27120        serf.Server  102386   hphaytest007.snc1.facebook.com   1279043481362                    0
+lab1          27120        serf.Server  102388   hpfeedtest001.snc1.facebook.com  1279043481362                    0
+lab1          27120        serf.Server  154737   evaldb008.snc1.facebook.com      1279300667916                    0
+lab1          27120        serf.Server  154784   gpgpu002.snc1.facebook.com       1279300667916                    0
+lab1          27120        serf.Server  154855   hadoop20001.snc1.facebook.com    1279300731135                    0
+lab1          27120        serf.Server  154856   hadoop20002.snc1.facebook.com    1279300731135                    0
+lab1          27120        serf.Server  257758   udbqa014.snc1.facebook.com       1295915203088                    499800253
+lab1          27120        subnet       0        10.22.31.0/24                    1288998522459                    0
+labr          17736        Asset        18624    labrack1.06.snc1.facebook.com    1277938272706                    0
+labr          17736        Asset        29598    udbqa009.snc1.facebook.com       1281571223091                    0
+labr          17736        Asset        29627    udbqa010.snc1.facebook.com       1301076102264                    499800253
+labr          17736        Asset        75346    adsvir001.snc1.facebook.com      1279300617027                    0
+labr          17736        Asset        87834    evaldb001.snc1.facebook.com      1288843992654                    0
+labr          17736        Asset        103620   evaldb003.snc1.facebook.com      1279300631102                    0
+labr          17736        serf.Device  299467   labrack1.06.snc1.facebook.com    1301635297283                    0
+labr          17736        serf.Server  15459    udbqa009.snc1.facebook.com       1281571223825                    0
+labr          17736        serf.Server  15488    udbqa010.snc1.facebook.com       1301076102589                    499800253
+labr          17736        serf.Server  43576    evaldb001.snc1.facebook.com      1288843993125                    0
+labr          17736        serf.Server  154642   adsvir001.snc1.facebook.com      1279300641353                    0
+labr          17736        serf.Server  154696   evaldb003.snc1.facebook.com      1279300667916                    0
+labr          17736        subnet       0        10.22.31.0/24                    1288998519243                    0
+lab1          5624         Asset        31800    NULL                             1277915138110                    0
+lab1          5624         Asset        111549   NULL                             1279043427696                    0
+lab1          5624         Asset        122195   webi20019.snc1.facebook.com      1288133971358                    0
+lab1          5624         serf.Device  307000   1301625112196                    0
+lab1          5624         serf.Server  17168    1301625112196                    0
+lab1          5624         serf.Server  154333   webi20019.snc1.facebook.com      1301625112196                    0
+x             168128       Asset        62371    harch202.snc1.facebook.com       1288289760452                    0
+x             168128       Asset        62372    harch203.snc1.facebook.com       1288300194518                    0
+x             168128       Asset        62373    harch204.snc1.facebook.com       1288300274423                    0
+x             168128       Asset        62374    harch205.snc1.facebook.com       1288300354576                    0
+x             168128       Asset        62379    harch201.snc1.facebook.com       1288300424566                    0
+x             168128       serf.Server  32426    harch202.snc1.facebook.com       1288289760707                    0
+x             168128       serf.Server  32430    harch203.snc1.facebook.com       1288300194798                    0
+x             168128       serf.Server  32434    harch204.snc1.facebook.com       1288300274700                    0
+x             168128       serf.Server  32438    harch205.snc1.facebook.com       1288300355081                    0
+x             168128       serf.Server  32458    harch201.snc1.facebook.com       1288300425091                    0
+01            360315       Asset        274674   NULL                             1295914222378                    499800253
+01            360315       serf.Device  321282   1301635942194                    0
+lab2          284659       Asset        6996     rsw2lab2.07.snc1.facebook.com    1288058917863                    0
+lab2          284659       Asset        62678    NULL                             1288058942861                    0
+lab2          284659       serf.Device  297766   rsw2lab2.07.snc1.facebook.com    1301635210915                    0
+lab2          284659       serf.Device  303746   1301635338438                    0
+fn-2          256574       Asset        119280   NULL                             1287526095028                    0
+fn-2          256574       Asset        276522   nfshome102.snc6.facebook.com     1287538534347                    0
+fn-2          256574       Asset        276528   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276529   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276530   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276531   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276532   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276535   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276536   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       Asset        276537   shelf:                           nfshome101.snc6/nfshome102.snc6  1287525995251    0
+fn-2          256574       serf.Device  307415   1301635619942                    0
+fn-2          256574       serf.Device  321573   nfshome102.snc6.facebook.com     1301635925666                    0
+fn-2          256574       serf.Device  321589   shelf:                           nfshome101.snc6/nfshome102.snc6  2487             1301635925666  0
+fn-2          256574       serf.Device  321592   shelf:                           nfshome101.snc6/nfshome102.snc6  5437             1301635925666  0
+fn-2          256574       serf.Device  321600   shelf:                           nfshome101.snc6/nfshome102.snc6  8644             1301635925666  0
+fn-2          256574       serf.Device  321604   shelf:                           nfshome101.snc6/nfshome102.snc6  9496             1301635925666  0
+fn-2          256574       serf.Device  321607   shelf:                           nfshome101.snc6/nfshome102.snc6  5844             1301635925666  0
+fn-2          256574       serf.Device  321616   shelf:                           nfshome101.snc6/nfshome102.snc6  555              1301635925666  0
+fn-2          256574       serf.Device  321619   shelf:                           nfshome101.snc6/nfshome102.snc6  8106             1301635925666  0
+fn-2          256574       serf.Device  321623   shelf:                           nfshome101.snc6/nfshome102.snc6  134              1301635925666  0
+DE            448437       Asset        185736   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185738   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185739   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185744   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185749   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185754   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185759   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185764   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185769   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185774   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185785   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        185786   NULL                             1302018532280                    100001268589053
+DE            448437       Asset        418753   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314254   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314257   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314258   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314259   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314262   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314263   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314266   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314267   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314270   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  314271   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Device  338529   NULL                             1302018532280                    100001268589053
+DE            448437       serf.Server  93047    NULL                             1302018532280                    100001268589053
+DE            448437       serf.Server  93049    NULL                             1302018532280                    100001268589053
+DE            448437       subnet       0        10.56.243.0/24                   1302126411479                    0
+UNKNOWN       448442       Asset        184716   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184718   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184719   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184724   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184729   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184734   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184739   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184744   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184749   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       Asset        184754   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314015   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314016   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314019   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314020   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314024   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314058   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314065   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314068   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314071   NULL                             1302018892334                    100001268589053
+UNKNOWN       448442       serf.Device  314076   NULL                             1302018892334                    100001268589053
+UNKNOWN       448451       Asset        335164   NULL                             1302023406909                    100001268589053
+UNKNOWN       448451       Asset        335169   NULL                             1302023229197                    100001268589053
+UNKNOWN       448451       Asset        335170   NULL                             1302023379974                    100001268589053
+UNKNOWN       448451       Asset        335173   NULL                             1302023354304                    100001268589053
+UNKNOWN       448451       Asset        417675   NULL                             1302022863772                    100001268589053
+UNKNOWN       448451       Asset        417697   NULL                             1302023287226                    100001268589053
+UNKNOWN       448451       Asset        417741   NULL                             1302023123926                    100001268589053
+UNKNOWN       448451       Asset        418115   NULL                             1302023153542                    100001268589053
+UNKNOWN       448451       Asset        418291   NULL                             1302023315554                    100001268589053
+UNKNOWN       448451       Asset        418379   NULL                             1302023256821                    100001268589053
+UNKNOWN       448451       Asset        418423   NULL                             1302023094936                    100001268589053
+UNKNOWN       448451       Asset        418489   NULL                             1302022886599                    100001268589053
+UNKNOWN       448451       Asset        418511   NULL                             1302022637826                    100001268589053
+UNKNOWN       448451       Asset        418797   NULL                             1302023201977                    100001268589053
+UNKNOWN       448451       serf.Device  329902   NULL                             1302023406909                    100001268589053
+UNKNOWN       448451       serf.Device  329908   NULL                             1302023229197                    100001268589053
+UNKNOWN       448451       serf.Device  329910   NULL                             1302023379974                    100001268589053
+UNKNOWN       448451       serf.Device  329919   NULL                             1302023354304                    100001268589053
+UNKNOWN       448451       serf.Device  338473   NULL                             1302023153542                    100001268589053
+UNKNOWN       448451       serf.Device  338505   NULL                             1302022886599                    100001268589053
+UNKNOWN       448451       serf.Device  338508   NULL                             1302022637826                    100001268589053
+UNKNOWN       448451       serf.Device  338545   NULL                             1302023201977                    100001268589053
+UNKNOWN       448451       serf.Device  338614   NULL                             1302022863772                    100001268589053
+UNKNOWN       448451       serf.Device  338617   NULL                             1302023287226                    100001268589053
+UNKNOWN       448451       serf.Device  338622   NULL                             1302023123926                    100001268589053
+UNKNOWN       448451       serf.Device  338652   NULL                             1302023256821                    100001268589053
+UNKNOWN       448451       serf.Device  338656   NULL                             1302023094936                    100001268589053
+UNKNOWN       448451       serf.Device  338664   NULL                             1302023315554                    100001268589053

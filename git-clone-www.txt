@@ -1,0 +1,120 @@
+#!/bin/bash
+#
+# Creates a new www sandbox managed by git.
+#
+# Usage: git-clone-www [dirname]
+#
+# dirname defaults to "www-git".
+#
+
+DIRNAME=${1:-www-git}
+
+NFS_REPO=/home/engshare/git/tfb
+
+# Are we running on a machine that has a local shared copy of the git repo?
+if [ -d /data/git/tfb ]; then
+	# Yes. Reuse its objects directory.
+	echo "Cloning the local host's shared www repository..."
+	PARENT=/data/git/tfb
+	SHARE=-s
+else
+	# Nope, copy the NFS server's objects locally so as not to be dog slow.
+	echo "Copying from the shared www repository on the NFS server..."
+	PARENT=$NFS_REPO
+	SHARE=
+fi
+
+if [ ! -d $HOME/local ]; then
+	echo "You don't seem to have a 'local' symlink in your home directory."
+	echo "Fix that and try again."
+	exit 1
+fi
+
+cd $HOME/local
+if [ -d "$DIRNAME" ]; then
+	echo "You already have a $DIRNAME directory; won't overwrite it."
+	echo "Aborting."
+	exit 1
+fi
+
+# We clone the shared repository here rather than running "git svn clone"
+# because it's much, much more efficient. And the clone has some options:
+#
+# -n = Don't check out working copy yet.
+# -s = Reference the origin's .git/objects directory rather than copying.
+#      Saves gobs of disk space and makes the clone nearly instantaneous.
+#      We don't do this if there's no local-disk shared repo.
+
+git clone $SHARE -n "$PARENT" "$DIRNAME"
+
+cd "$DIRNAME"
+
+# If we're sharing a local repository's objects, use the NFS server as a
+# fallback so stuff doesn't break if we use this repo from another host
+# that doesn't have a /data/git/tfb directory.
+ALTERNATES=.git/objects/info/alternates
+if [ -s $ALTERNATES ]; then
+	echo $NFS_REPO/.git/objects >> $ALTERNATES
+fi
+
+# We want to use the same remote branch name ("remotes/trunk") for git-svn
+# and for fetches from the shared git repo, so set that up explicitly.
+git config remote.origin.url "file://$PARENT/.git"
+git config remote.origin.fetch refs/remotes/trunk:refs/remotes/trunk
+git config --remove-section branch.master
+
+# Enable the standard commit template
+git config commit.template /home/engshare/admin/scripts/templates/git-commit-template.txt
+
+# Enable recording of rebase conflict resolutions
+git config rerere.enabled true
+
+# Now fetch from the shared repo. This mostly just creates the new "trunk"
+# branch since we already have the objects thanks to the initial "git clone".
+git fetch origin
+
+# Blow away the "origin/" branches created by "git clone" -- we don't need them.
+rm -rf .git/refs/remotes/origin
+
+# Now it's time to turn this plain old git repo into a git-svn repo. Really
+# all we need is the svn-remote configuration (installed above) and a
+# metadata file with some version information. git-svn is smart enough to
+# rebuild the other stuff it needs.
+
+echo ""
+echo "Synchronizing with svn..."
+
+git svn init -itrunk svn+ssh://tubbs/svnroot/tfb/trunk/www
+
+# Now tweak the git-svn config a little bit so it's easier for someone to
+# go add more "fetch" lines if they want to track svn-side branches in
+# addition to trunk. This doesn't affect any of the existing history.
+git config svn-remote.svn.url svn+ssh://tubbs/svnroot
+git config svn-remote.svn.fetch tfb/trunk/www:refs/remotes/trunk
+
+# Let git-svn update its mappings and fetch the latest revisions. This can
+# spew lots of uninteresting output so suppress it.
+git svn fetch > /dev/null
+
+echo ""
+echo "Checking out working copy..."
+
+# We use git reset here because the git svn fetch might have advanced trunk
+# to a newer revision than the master branch created by git clone.
+git reset --hard trunk
+
+if [ ! -d "$HOME/$DIRNAME" ]; then
+	echo ""
+	echo "Making home dir symlink: $HOME/$DIRNAME"
+	ln -s "local/$DIRNAME" "$HOME/$DIRNAME"
+else
+	echo ""
+	echo "$HOME/$DIRNAME already exists; leaving it alone."
+fi
+
+echo ""
+echo "All done. To make this your new main sandbox directory, run"
+echo ""
+echo "    rm -rf ~/www"
+echo "    ln -s ~/$DIRNAME ~/www"
+echo ""

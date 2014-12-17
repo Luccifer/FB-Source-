@@ -1,0 +1,22 @@
+Restarting with system allocator.
+I1027 104928 7fa799181860 DocScorer.cpp:20] registering TermCountScorer for RANK_TERM_COUNT
+I1027 104928 7fa799181860 DocScorer.cpp:48] registering TermWeightedScorer for RANK_TERM_WEIGHTED
+I1027 104928 7fa799181860 PageScorer.h:69] registering PageScorer for RANK_PAGES
+I1027 104928 7fa799181860 Init.cpp:65] Built by user mackduan on Thu Oct 27 10:25:26 PDT 2011 on host devrs317.snc6.facebook.com:/mnt/vol/devrs317.snc6/mackduan/fbcode
+E1027 104928 7fa799181860 IndexServer.cpp:213] setrlimit error setting max fd size to 500000, max 500000: Operation not permitted [1]
+W1027 104928 7fa799181860 DiskIndexBase.cpp:37] Could not find the index version in /home/mackduan/unicorn.index/index.doctable
+I1027 104928 7fa799181860 MixedIdUtil.cpp:40] Tested 0 hits for mixed consistency. 0 were not FBIDs. 0 were probably FBIDs
+W1027 104928 7fa799181860 MixedIdUtil.cpp:51] Not enough hits (0) to make mixed consistency check on query: (random 5000 (or gender:0 gender:1)) [with 0 non-fbid results]
+*** Aborted at 1319737768 (unix time) try "date -d @1319737768" if you are using GNU date ***
+PC: @     0x7fa7973b28fa __pthread_rwlock_wrlock_internal
+*** SIGSEGV (@0x70) received by PID 28070 (TID 0x7fa799181860) from PID 112; stack trace: ***
+    @     0x7fa7973b75e0 (unknown)
+    @     0x7fa7973b28fa __pthread_rwlock_wrlock_internal
+    @           0x4e0c7a facebook::unicorn::LayerManager::updateRealtimeDirStats()
+    @           0x485c87 facebook::unicorn::IndexService::init()
+    @           0x4878e4 facebook::unicorn::IndexService::IndexService()
+    @           0x487ebd facebook::unicorn::IndexService::serviceFromIndex()
+    @           0x42be27 main
+    @     0x7fa79666235d __libc_start_main
+    @           0x40dcb9 (unknown)
+

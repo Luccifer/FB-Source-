@@ -1,0 +1,78 @@
+#!/usr/bin/python
+
+# You may also find this useful in your .bashrc:
+# gfc() {
+#   git-fb-clone "$@" && cd -- "$(basename "${@:1:$# - 1}")"
+# }
+
+from cmd_util import cmd_output, cmd_wait, arg_esc
+from optparse import OptionParser
+import os
+import sys
+
+usage = """usage: git-fb-clone [options] <path-from-svnroot>
+example: git-fb-clone -n 0 projects/pyphp
+example: git-fb-clone -r 131000 tfb/trunk/www
+         (however, git-clone-www is usually better for tfb)
+example: git-fb-clone -c projects/wheel2.0"""
+opt_p = OptionParser(usage)
+opt_p.add_option("-n", "--back-n-revs", help="Grab latest N revisions.")
+opt_p.add_option("-r", "--back-to-rev", help="Grab since revision R.")
+opt_p.add_option("-c", "--create", action="store_true",
+    help="Create a new repo.")
+(opts, args) = opt_p.parse_args()
+
+if opts.back_n_revs != None and opts.back_to_rev != None:
+    print "You cannot specify --back-n-revs and --back-to-rev."
+    opt_p.print_help()
+    sys.exit(-1)
+if len(args) != 1:
+    print "You must specify a single repo-path."
+    opt_p.print_help()
+    sys.exit(-1)
+
+fbuser = os.getenv("FBUSER")
+if not fbuser:
+    fbuser = os.getenv('USER')
+
+repo_path, = args
+dir = os.path.basename(repo_path)
+ssh_port = 22
+repo_loc = "svn+ssh://%s@tubbs/svnroot/%s" % (fbuser, repo_path)
+ssh_port = 1082
+repo_loc = "svn+ssh://%s@localhost/svnroot/%s" % (fbuser, repo_path)
+
+if opts.create:
+    cmd = ['svn', 'mkdir', repo_loc]
+    cmd_wait(cmd)
+    print ">>> Created repo."
+    print ">>> The clone after create tends to take a sec but work, \
+so wait for it."
+    print ">>> (not sure why.. git-svn is written in perl..)"
+
+back_to_rev = None
+if opts.back_to_rev != None:
+    back_to_rev = int(opts.back_to_rev)
+elif opts.back_n_revs:
+    print '>>> Calculating start rev.'
+    cmd = "SVN_SSH='ssh -p %d' \
+svn log --limit 1 -q --incremental %s | tail -n1 | \
+awk '{print $1}' | tr -d r" % (ssh_port, arg_esc(repo_loc))
+    out_rev = cmd_output(cmd)
+    try:
+        rev = int(out_rev[0])
+    except:
+        print "Error calculating start rev."
+        sys.exit(-1)
+    back_to_rev = max(0, rev - int(opts.back_n_revs))
+
+print '>>> Grabbing repo.'
+cmd = ['git', 'svn', 'clone', repo_loc]
+if back_to_rev:
+    cmd += ['-r%d:HEAD' % back_to_rev]
+cmd_wait(cmd)
+
+print '>>> Packing repo.'
+cmd_wait('cd %s && git gc --aggressive --prune' % arg_esc(dir))
+
+print '>>> fb-clone completed.'

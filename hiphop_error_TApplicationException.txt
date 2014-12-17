@@ -1,0 +1,46 @@
+[Fri Jul 13 12:48:19 2012] [119] HipHop Fatal error: Uncaught exception 'TApplicationException' with message '5' in :\nStack trace:\n#0 /data/users/gunaa/www-git/lib/thrift/packages/intern/image_params/IMPService.php(2448): thrift_protocol_read_binary()\n#1 /data/users/gunaa/www-git/lib/thrift/packa
+[Fri Jul 13 12:48:19 2012] [119] Fatal PHP Exception: TApplicationException: 5\n(code: 0)\n(script: WebIMPHWSubmitParamsController)\n(fb_employee: 1)\n(user: 592637359 <cookie c_user>)\n(ip: 2620:0:1cfe:18:21c6:e48:fea4:d03b)\n(ipv6: true)\n(at: our.gunaa.devrs329.facebook.com/intern/cyborg/ajax/imp
+
+[Fri Jul 13 12:48:19 2012] [hphp] [5366:7fea137ff700:119:000003] Fatal PHP Exception: TApplicationException: 5
+(code: 0)
+(script: WebIMPHWSubmitParamsController)
+(fb_employee: 1)
+(user: 592637359 <cookie c_user>)
+(ip: 2620:0:1cfe:18:21c6:e48:fea4:d03b)
+(ipv6: true)
+(at: our.gunaa.devrs329.facebook.com/intern/cyborg/ajax/imp/hwtree_submit_params?PARTITION_SCHEMAWHITE_LIST%5B0%5D=jbod_noformat&text_PARTITION_SCHEMAWHITE_LIST%5B0%5D=jbod_noformat&SEEDWHITE_LIST%5B0%5D=centos5-bt&text_SEEDWHITE_LIST%5B0%5D=centos5-bt&__user=592637359&__a=1&fb_isb=AdFCY6CH&phstamp=16581661155653118816710869214&nodeID=8&tier=ads&tierNodeID=486)
+(referer: https://our.gunaa.devrs329.facebook.com/intern/cyborg/imp?tab=hw&nodeID=8&tier%5B0%5D=ads&curr_tier=ads&treetype=complete)
+(agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:13.0) Gecko/20100101 Firefox/13.0.1)
+(post: __user=592637359&__a=1&fb_isb=AdFCY6CH&phstamp=1658166115565311881671086958)
+(Cluster: snc6c02)
+(Release: )
+(SVN Rev: )
+(Host: devrs329.snc6.facebook.com)
+(JS Rev: 586944)
+(DominoKey: http.500.php_exception:WebIMPHWSubmitParamsController:our.gunaa.devrs329.facebook.com)
+(FBTraceID: BEuut9kmtlZ)
+(Preparable stack:
+    WebIMPHWSubmitParamsController::genDialog (84): 0 Ancestors: WebIMPHWSubmitParamsController::genPayload
+    WebIMPHWSubmitParamsController::genPayload (83): 1 Ancestors: WebIMPHWSubmitParamsController::genAliteAsyncResponse
+    WebIMPHWSubmitParamsController::genAliteAsyncResponse (82): 1 Ancestors: WebIMPHWSubmitParamsController::genResponse
+    WebIMPHWSubmitParamsController::genResponse (81): 1 )
+trace starts at [unknown:0]
+    #0 throw(...) called at [www/unknown:0]
+    #1 thrift_protocol_read_binary({"_special_text_key_DONT_USE":"object TBinaryProtocolAccelerated"}, "IMPService_createAndDeleteParams_result", false) called at [/data/users/gunaa/www-git/lib/thrift/packages/intern/image_params/IMPService.php:2448]
+    #2 IMPServiceClient->recv_createAndDeleteParams(1) called at [/data/users/gunaa/www-git/lib/thrift/packages/intern/image_params/IMPService.php:2413]
+    #3 IMPServiceClient->createAndDeleteParams(592637359, "8", "ads", [{"_special_text_key_DONT_USE":"object IMPParam"},{"_special_text_key_DONT_USE":"object IMPParam"}]) called at [www/unknown:0]
+    #4 call_user_func_array([{"_special_text_key_DONT_USE":"object IMPServiceClient"},"createAndDeleteParams"], [592637359,"8","ads",[{"_special_text_key_DONT_USE":"object IMPParam"},{"_special_text_key_DONT_USE":"object IMPParam"}]]) called at [/data/users/gunaa/www-git/flib/core/thrift/monitor/DynoMonitoredThriftClient.php:62]
+    #5 DynoMonitoredThriftClient->__call("createAndDeleteParams", [592637359,"8","ads",[{"_special_text_key_DONT_USE":"object IMPParam"},{"_special_text_key_DONT_USE":"object IMPParam"}]]) called at [www/unknown:0]
+    #6 call_user_func_array([{"_special_text_key_DONT_USE":"object DynoMonitoredThriftClient"},"createAndDeleteParams"], [592637359,"8","ads",[{"_special_text_key_DONT_USE":"object IMPParam"},{"_special_text_key_DONT_USE":"object IMPParam"}]]) called at [/data/users/gunaa/www-git/flib/core/smc/ProfiledFacebookServiceClient.php:116]
+    #7 ProfiledFacebookServiceClient->__call("createAndDeleteParams", [592637359,"8","ads",[{"_special_text_key_DONT_USE":"object IMPParam"},{"_special_text_key_DONT_USE":"object IMPParam"}]]) called at [/data/users/gunaa/www-git/flib/intern/site/web/cyborg/ajax/imp/WebIMPHWSubmitParamsController.php:68]
+    #8 WebIMPHWSubmitParamsController->37246918850361028562_2({"_special_text_key_DONT_USE":"object continuation$37246918850361028562_2"}) called at [www/unknown:-1]
+    #9 continuation$37246918850361028562_2->next() called at [/data/users/gunaa/www-git/flib/core/preparable/GeneratorPreparableWrapper.php:244]
+    #10 GeneratorPreparableWrapper->iterateGenerator() called at [/data/users/gunaa/www-git/flib/core/preparable/GeneratorPreparableWrapper.php:193]
+    #11 GeneratorPreparableWrapper->prepare(0) called at [/data/users/gunaa/www-git/flib/core/preparable/Preparable.php:305]
+    #12 Preparable->__doRound() called at [/data/users/gunaa/www-git/flib/core/preparable/Preparable.php:260]
+    #13 Preparable->__continue() called at [/data/users/gunaa/www-git/flib/core/preparable/Preparer.php:379]
+    #14 Preparer->run() called at [/data/users/gunaa/www-git/flib/core/preparable/Preparer.php:350]
+    #15 Preparer->doJoin({"_special_text_key_DONT_USE":"object GeneratorPreparableWrapper"}) called at [/data/users/gunaa/www-git/flib/core/preparable/Preparer.php:344]
+    #16 Preparer::join({"_special_text_key_DONT_USE":"object GeneratorPreparableWrapper"}) called at [/data/users/gunaa/www-git/flib/core/preparable/prep_util.php:109]
+    #17 _prepv([{"_special_text_key_DONT_USE":"object continuation$38835562718991762163_1"}], true) called at [/data/users/gunaa/www-git/flib/core/preparable/prep_util.php:25]
+    #18 prep({"_special_text_key_DONT_USE":"object continuation$38835562718991762163_1"}) called at [/data/users/gunaa/www-git/lib/alite/exec/main.php:123]

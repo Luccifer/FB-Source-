@@ -1,0 +1,48 @@
+2010-04-01 13:51:41,674 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: MSG_REGION_OPEN: test1,,1270155001001
+2010-04-01 13:51:41,674 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: Worker: MSG_REGION_OPEN: test1,,1270155001001
+2010-04-01 13:51:41,675 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Creating region test1,,1270155001001, encoded=453348905
+2010-04-01 13:51:41,711 DEBUG org.apache.hadoop.hbase.regionserver.Store: loaded /hbase-karthik2/test1/453348905/actions/2637857509172895850, isReference=false, sequence id=24186, length=1219799213, majorCompaction=fal
+se
+2010-04-01 13:51:41,718 DEBUG org.apache.hadoop.hbase.regionserver.Store: loaded /hbase-karthik2/test1/453348905/actions/569506136303213728, isReference=false, sequence id=24224, length=3125372, majorCompaction=false
+2010-04-01 13:51:41,721 INFO org.apache.hadoop.hbase.regionserver.HRegion: region test1,,1270155001001/453348905 available; sequence id is 24225
+2010-04-01 13:51:41,732 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: MSG_REGION_CLOSE: test1,1244000000,1270154819790: Overloaded
+2010-04-01 13:51:41,732 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: MSG_REGION_CLOSE: test1,6213000000,1270154929401: Overloaded
+2010-04-01 13:51:41,732 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: Worker: MSG_REGION_CLOSE: test1,1244000000,1270154819790: Overloaded
+2010-04-01 13:51:41,733 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Closing test1,1244000000,1270154819790: compactions & flushes disabled 
+2010-04-01 13:51:41,733 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Updates disabled for region, no outstanding scanners on test1,1244000000,1270154819790
+2010-04-01 13:51:41,733 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: No more row locks outstanding on region test1,1244000000,1270154819790
+2010-04-01 13:51:41,733 DEBUG org.apache.hadoop.hbase.regionserver.Store: closed actions
+2010-04-01 13:51:41,733 INFO org.apache.hadoop.hbase.regionserver.HRegion: Closed test1,1244000000,1270154819790
+2010-04-01 13:51:41,733 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: Worker: MSG_REGION_CLOSE: test1,6213000000,1270154929401: Overloaded
+2010-04-01 13:51:41,734 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Closing test1,6213000000,1270154929401: compactions & flushes disabled 
+2010-04-01 13:51:41,734 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: waiting for compaction to complete for region test1,6213000000,1270154929401
+2010-04-01 13:51:45,786 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: MSG_REGION_OPEN: test1,4931000000,1270154651330
+2010-04-01 13:51:55,058 DEBUG org.apache.hadoop.hbase.io.hfile.LruBlockCache: Cache Stats: Sizes: Total=19.662636MB (20617768), Free=2377.0125MB (2492478168), Max=2396.675MB (2513095936), Counts: Blocks=2, Access=15080
+9, Hit=4248, Miss=146561, Evictions=0, Evicted=0, Ratios: Hit Ratio=2.8168080374598503%, Miss Ratio=97.18319177627563%, Evicted/Run=NaN
+2010-04-01 13:52:26,478 WARN org.apache.hadoop.hdfs.DFSClient: File /hbase-karthik2/test1/52953679/actions/7647229883750427089.2106027058 is beng deleted only through Trash org.apache.hadoop.fs.FsShell.delete because a
+ll deletes must go through Trash.
+2010-04-01 13:52:26,482 WARN org.apache.hadoop.hdfs.DFSClient: File /hbase-karthik2/test1/52953679/actions/6081318570625260735.2106027058 is beng deleted only through Trash org.apache.hadoop.fs.FsShell.delete because a
+ll deletes must go through Trash.
+2010-04-01 13:52:26,485 WARN org.apache.hadoop.hdfs.DFSClient: File /hbase-karthik2/test1/52953679/actions/7546467869721571882.2106027058 is beng deleted only through Trash org.apache.hadoop.fs.FsShell.delete because a
+ll deletes must go through Trash.
+2010-04-01 13:52:26,488 WARN org.apache.hadoop.hdfs.DFSClient: File /hbase-karthik2/test1/52953679/actions/836652338515748024 is beng deleted only through Trash org.apache.hadoop.fs.FsShell.delete because all deletes m
+ust go through Trash.
+2010-04-01 13:52:26,491 DEBUG org.apache.hadoop.hbase.regionserver.Store: Completed compaction of actions; new storefile is hdfs://titantest016.snc1.facebook.com:9000/hbase-karthik2/test1/52953679/actions/8498559538135
+679029; store size is 1.2g
+2010-04-01 13:52:26,492 WARN org.apache.hadoop.hdfs.DFSClient: File /hbase-karthik2/test1/compaction.dir/52953679 is beng deleted only through Trash org.apache.hadoop.fs.FsShell.delete because all deletes must go throu
+gh Trash.
+2010-04-01 13:52:26,495 INFO org.apache.hadoop.hbase.regionserver.HRegion: compaction completed on region test1,6213000000,1270154929401 in 44sec
+2010-04-01 13:52:26,496 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Updates disabled for region, no outstanding scanners on test1,6213000000,1270154929401
+2010-04-01 13:52:26,496 INFO org.apache.hadoop.hbase.regionserver.HRegion: Starting compaction on region test1,6861000000,1270154929401
+2010-04-01 13:52:26,496 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: No more row locks outstanding on region test1,6213000000,1270154929401
+2010-04-01 13:52:26,496 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Started memstore flush for region test1,6213000000,1270154929401. Current region memstore size 4.2m
+2010-04-01 13:52:26,500 DEBUG org.apache.hadoop.hbase.regionserver.Store: Started compaction of 4 file(s), hasReferences=true, into /hbase-karthik2/test1/compaction.dir/1386184946, seqid=22436
+2010-04-01 13:52:26,594 DEBUG org.apache.hadoop.hbase.regionserver.Store: Added hdfs://titantest016.snc1.facebook.com:9000/hbase-karthik2/test1/52953679/actions/307065832566318759, entries=6550, sequenceid=24246, memsi
+ze=4.2m, filesize=3.5m to test1,6213000000,1270154929401
+2010-04-01 13:52:26,595 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Finished memstore flush of ~4.2m for region test1,6213000000,1270154929401 in 98ms, sequence id=24246, compaction requested=false
+2010-04-01 13:52:26,596 DEBUG org.apache.hadoop.hbase.regionserver.Store: closed actions
+2010-04-01 13:52:26,596 INFO org.apache.hadoop.hbase.regionserver.HRegion: Closed test1,6213000000,1270154929401
+2010-04-01 13:52:26,596 INFO org.apache.hadoop.hbase.regionserver.HRegionServer: Worker: MSG_REGION_OPEN: test1,4931000000,1270154651330
+2010-04-01 13:52:26,597 DEBUG org.apache.hadoop.hbase.regionserver.HRegion: Creating region test1,4931000000,1270154651330, encoded=997401793
+2010-04-01 13:52:26,705 DEBUG org.apache.hadoop.hbase.regionserver.Store: loaded /hbase-karthik2/test1/997401793/actions/3623686973338579117.1520309134, isReference=true, sequence id=20412, length=397993469, majorCompa
+ction=false

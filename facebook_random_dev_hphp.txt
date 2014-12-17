@@ -1,0 +1,70 @@
+[julk@dev1852 ~/fbcode/hphp] clear ; ~/fbcode/_bin/hphp/hhvm/hhvm -m server -vServer.Type=libevent -vServer.Port=9000 -vAdminServer.Port=9001mapping self...
+INFO: AddressSanitizer ignores mlock/mlockall/munlock/munlockall
+mapping self took 0'00" (1002 us) wall time
+loading static content...
+searching all files under source root...
+analyzing 32329 files under source root...
+loaded 0 bytes of static content in total
+loading static content took 0'00" (296162 us) wall time
+page server started
+admin server started
+all servers started
+I1017 11:21:19.000000 26165 thrift/lib/cpp2/server/Thrift2Server.cpp:111] libevent 1.4.14b-stable method epoll
+I1017 11:21:23.000000 26195 ./hphp/runtime/server/server-worker.h:103] Command: /runtime/tmp/hello_world.php
+I1017 11:21:23.000000 26195 hphp/runtime/server/request-uri.cpp:32] ServerObject: /runtime/tmp/hello_world.php?name=Zuck
+I1017 11:21:23.000000 26195 hphp/runtime/server/http-protocol.cpp:556] Absolute path: /data/users/julk/fbcode2/hphp//runtime/tmp/hello_world.php
+I1017 11:21:25.000000 26195 ./hphp/runtime/server/server-worker.h:103] Command: /runtime/tmp/hello_world.php
+I1017 11:21:25.000000 26195 hphp/runtime/server/request-uri.cpp:32] ServerObject: /runtime/tmp/hello_world.php?name=Zuck
+I1017 11:21:25.000000 26195 hphp/runtime/server/http-protocol.cpp:556] Absolute path: /data/users/julk/fbcode2/hphp//runtime/tmp/hello_world.php
+I1017 11:21:27.000000 26280 ./hphp/runtime/server/server-worker.h:103] Command: /stop
+Got admin port stop request from 127.0.0.1
+page server stopped
+admin server stopped
+all servers stopped
+[julk@dev1852 ~/fbcode/hphp] clear ; ~/fbcode/_bin/hphp/hhvm/hhvm -m server -v Server.Type=proxygen -vServer.Port=9000 -vAdminServer.Port=9001
+
+mapping self...
+INFO: AddressSanitizer ignores mlock/mlockall/munlock/munlockall
+mapping self took 0'00" (973 us) wall time
+loading static content...
+searching all files under source root...
+analyzing 32329 files under source root...
+loaded 0 bytes of static content in total
+loading static content took 0'00" (305120 us) wall time
+page server started
+admin server started
+all servers started
+I1017 11:21:36.000000 26322 thrift/lib/cpp2/server/Thrift2Server.cpp:111] libevent 1.4.14b-stable method epoll
+I1017 11:21:39.000000 26374 ./hphp/runtime/server/server-worker.h:103] Command: /runtime/tmp/hello_world.php
+I1017 11:21:39.000000 26374 hphp/runtime/server/request-uri.cpp:32] ServerObject: /runtime/tmp/hello_world.php?name=Zuck
+I1017 11:21:39.000000 26374 hphp/runtime/server/http-protocol.cpp:556] Absolute path: /data/users/julk/fbcode2/hphp//runtime/tmp/hello_world.php
+I1017 11:21:41.000000 26374 ./hphp/runtime/server/server-worker.h:103] Command: /runtime/tmp/hello_world.php
+I1017 11:21:41.000000 26374 hphp/runtime/server/request-uri.cpp:32] ServerObject: /runtime/tmp/hello_world.php?name=Zuck
+I1017 11:21:41.000000 26374 hphp/runtime/server/http-protocol.cpp:556] Absolute path: /data/users/julk/fbcode2/hphp//runtime/tmp/hello_world.php
+I1017 11:21:43.000000 26415 ./hphp/runtime/server/server-worker.h:103] Command: /stop
+Got admin port stop request from 127.0.0.1
+page server stopped
+Stopping ProxygenServer
+admin server stopped
+Stopping ProxygenServer
+terminating ProxygenServer
+terminating ProxygenServer
+all servers stopped
+I1017 11:21:43.000000 26321 ti/proxygen/lib/services/Acceptor.cpp:337] All connections drained from Acceptor=0x603600026040 in thread 0x60540001cf30
+terminating ProxygenServer
+Waiting for ProxygenServer
+==26316== AddressSanitizer CHECK failed: /home/engshare/third-party/src/libgcc/libgcc-4.8.1/gcc-4.8.1/libsanitizer/asan/asan_rtl.cc:397 "((curr_thread)) != (0)" (0x0, 0x0)
+    #0 0x7f6542f42acd (/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/lib/libasan.so.0.0.0+0x13acd)
+    #1 0x7f6542f4b6cd (/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/lib/libasan.so.0.0.0+0x1c6cd)
+    #2 0x7f6542f43004 (/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/lib/libasan.so.0.0.0+0x14004)
+    #3 0x38670ca (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x38670ca)
+    #4 0x3866ec9 (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x3866ec9)
+    #5 0x3806005 (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x3806005)
+    #6 0x38060ed (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x38060ed)
+    #7 0x44ee2e3 (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x44ee2e3)
+    #8 0x44edd02 (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x44edd02)
+    #9 0x44f4a04 (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x44f4a04)
+    #10 0x65b923e (/data/users/julk/fbcode2/_build/dbg/hphp/hhvm/hhvm+0x65b923e)
+    #11 0x7f653d15dd60 (/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/lib/libpthread-2.17.so+0x7d60)
+    #12 0x7f653d15df95 (/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/lib/libpthread-2.17.so+0x7f95)
+    #13 0x7f653ddd03ec (/usr/local/fbcode/gcc-4.8.1-glibc-2.17-fb/lib/libc-2.17.so+0x1033ec)

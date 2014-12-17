@@ -1,0 +1,27 @@
+[Wed Feb 16 20:59:09 2011] [hphp] [31290:52111940:1:000011] PHP Fatal error: PHP: Required file that does not exist: /home/amckinley/local/www-git/lib/thrift/packages/serialmon/serialmon.Serialmon_doStuff_args.php (in /data/users/amckinley/www-git/lib/thrift/autoload.php on line 38)
+(user: 0 <global_user>)
+(ip: 10.47.48.50)
+(at: www.amckinley.dev1090.facebook.com/intern/serialmon/thrift.php)
+(referer: Array)
+(agent: Python/THttpClient (serialmon.lpar))
+(Cluster: snc6c02)
+(Release: )
+(SVN Rev: )
+(DominoKey: php.fail:/intern/serialmon/thrift.php:www.amckinley.dev1090.facebook.com)
+(Preparable stack:
+    WebThriftSerialmonController (5): 0)
+trace starts at [/data/users/amckinley/www-git/lib/thrift/autoload.php:38]
+    #0 (...) called at [/data/users/amckinley/www-git/lib/thrift/autoload.php:38]
+    #1 __thrift_autoload("Serialmon_doStuff_args") called at [/data/users/amckinley/www-git/lib/thrift/packages/intern/serialmon/Serialmon.php:56]
+    #2 SerialmonProcessor->process_doStuff(0, {"_special_text_key_DONT_USE":"object TBinaryProtocolAccelerated"}, {"_special_text_key_DONT_USE":"object TBinaryProtocolAccelerated"}) called at [/data/users/amckinley/www-git/lib/thrift/packages/intern/serialmon/Serialmon.php:51]
+    #3 SerialmonProcessor->process({"_special_text_key_DONT_USE":"object TBinaryProtocolAccelerated"}, {"_special_text_key_DONT_USE":"object TBinaryProtocolAccelerated"}) called at [/data/users/amckinley/www-git/flib/alite/thrift/AliteThriftController.php:23]
+    #4 AliteThriftController->process() called at [/data/users/amckinley/www-git/flib/alite/exec/AliteController.php:39]
+    #5 AliteController->prepare(0, {"_special_text_key_DONT_USE":"object Preparer"}) called at [/data/users/amckinley/www-git/flib/core/preparable/Preparable.php:280]
+    #6 Preparable->__doRound() called at [/data/users/amckinley/www-git/flib/core/preparable/Preparer.php:394]
+    #7 Preparer->_go() called at [/data/users/amckinley/www-git/flib/core/preparable/Preparer.php:325]
+    #8 Preparer->go() called at [/data/users/amckinley/www-git/flib/core/preparable/prep_util.php:27]
+    #9 prepv([{"_special_text_key_DONT_USE":"object WebThriftSerialmonController"}]) called at [/data/users/amckinley/www-git/flib/core/preparable/prep_util.php:12]
+    #10 prep({"_special_text_key_DONT_USE":"object WebThriftSerialmonController"}) called at [/data/users/amckinley/www-git/lib/alite/exec/main.php:75]
+    #11 include("\/data\/users\/amckinley\/www-git\/lib\/alite\/exec\/main.php") called at [/data/users/amckinley/www-git/zeusgodofthunder/index.php:39]
+    #12 include("\/data\/users\/amckinley\/www-git\/zeusgodofthunder\/index.php") called at [/data/users/amckinley/www-git/lib/web/exec/transition.php:4]
+    #13 include("\/data\/users\/amckinley\/www-git\/lib\/web\/exec\/transition.php") called at [/data/users/amckinley/www-git/html/intern/serialmon/thrift.php:4]

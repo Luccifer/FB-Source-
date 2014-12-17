@@ -1,0 +1,40 @@
+$ time hg pull -u --profile
+pulling from ssh://hg.vip.facebook.com//data/scm/www
+searching for changes
+adding changesets
+adding manifests
+adding file changes
+added 2 changesets with 4 changes to 4 files                                    
+updating bookmark master
+4 files updated, 0 files merged, 1 files removed, 0 files unresolved            
+   CallCount    Recursive     Total(s)    Inline(s) module:lineno(function)
+           5            0      2.4535      2.4535   <posix.waitpid>
+         129            0      1.6345      1.6345   <method 'read' of 'file' objects>
+           8            0      1.3407      1.3407   <method 'readline' of 'file' objects>
+           1            0      1.2241      0.5096   <mercurial/merge.py>:156(manifestmerge)
+     +149296            0      0.4437      0.1939   +<mercurial/merge.py>:164(fmerge)
+     +149292            0      0.0801      0.0622   +<mercurial/manifest.py>:20(flags)
+     +149296            0      0.0347      0.0347   +<method 'get' of 'dict' objects>
+          +1            0      0.1557      0.0001   +<mercurial/copies.py>:168(mergecopies)
+          +5            0      0.0001      0.0001   +<mercurial/merge.py>:190(act)
+          24            0      0.4341      0.4341   <sorted>
+           1            0      0.4291      0.4291   <mercurial.osutil.statfiles>
+           1            0      1.4731      0.3215   <mercurial/dirstate.py>:706(status)
+          +1            0      1.1516      0.2211   +<mercurial/dirstate.py>:545(walk)
+         +29            0      0.0000      0.0000   +<method 'append' of 'list' objects>
+          +1            0      0.0000      0.0000   +<mercurial/demandimport.py>:83(__getattribute__)
+          +1            0      0.0000      0.0000   +<method 'iteritems' of 'dict' objects>
+           1            0      0.3132      0.3132   <mercurial.parsers.parse_dirstate>
+      504953            0      0.3514      0.2476   <mercurial/store.py>:32(decodedir)
+     +504953            0      0.1038      0.1038   +<method 'startswith' of 'str' objects>
+      597242            0      0.3299      0.2427   <mercurial/manifest.py>:20(flags)
+     +597242            0      0.0872      0.0872   +<method 'get' of 'dict' objects>
+           2            0      0.2220      0.2220   <mercurial.parsers.parse_manifest>
+           1            0      1.1516      0.2211   <mercurial/dirstate.py>:545(walk)
+          +1            0      0.4291      0.4291   +<mercurial.osutil.statfiles>
+          +2            0      0.2252      0.2252   +<sorted>
+          +1            0      0.1817      0.1817   +<zip>
+     +149298            0      0.0547      0.0547   +<mercurial/dirstate.py>:150(_join)
+     +149297            0      0.0215      0.0215   +<mercurial/match.py>:105(<lambda>)
+      896242            0      0.2046      0.2046   <method 'get' of 'dict' objects>
+      149296            0      0.4437      0.1939   <mercurial/merge.py>:164(fmerge)
