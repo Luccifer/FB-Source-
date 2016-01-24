@@ -1,0 +1,80 @@
+/**
+ * Copyright 2004-present Facebook. All Rights Reserved.
+ *
+ * @providesModule TipsCalculatorApp
+ * @flow
+ */
+'use strict';
+
+var React = require('react-native');
+var {
+  Bundler,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} = React;
+
+var TipsCalculatorApp = React.createClass({
+  getInitialState() {
+    return { number: 0 };
+  },
+
+  updateValue(value) {
+    this.setState({number: value});
+  },
+
+  renderTip() {
+    return this.state.number*100*18/10000;
+  },
+
+  renderTotal() {
+    return this.state.number*100*118/10000;
+  },
+
+  render() {
+
+    return (
+      <View style={styles.container}>
+          <TextInput
+            autoCorrect={false}
+            keyboardType={TextInput.keyboardType.numeric}
+            onChange={(event) => this.updateValue(event.nativeEvent.text)}
+            autoFocus={true}
+            style={styles.input}
+            textAlignment="center"
+          />
+        <Text style={styles.title}>Tip: ${this.renderTip()}</Text>
+        <Text style={styles.title}>Total: ${this.renderTotal()}</Text>
+      </View>
+    );
+  }
+});
+
+var styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    backgroundColor: 'darkmagenta'
+  },
+  title: {
+    fontSize: 39,
+    marginBottom: 20,
+    fontFamily: 'HelveticaNeue-Light',
+    fontWeight: 'normal',
+    color: 'white'
+  },
+  input: {
+    height: 156,
+    marginTop: 80,
+    fontFamily: 'HelveticaNeue-UltraLight',
+    fontSize: 156,
+    color: 'white'
+  }
+
+});
+
+Bundler.registerComponent('TipsCalculatorApp', () => TipsCalculatorApp);
+
+module.exports = TipsCalculatorApp;
