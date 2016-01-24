@@ -1,0 +1,42 @@
+<?hh
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+/**
+ * @emails oncall+ads_manager_reporting
+ */
+class EditImagesActivityLoaderTest
+  extends ActivityLoaderTestBase {
+
+  public function beforeEach(): void {
+    Classes::get('AdproAccountImageUrlUtils')
+      ->mockYield('genImageURLsFromHashes', 'http://yeah.woo');
+    $this->eventType = 'edit_images';
+    $this->extraData = array(
+      'txn_params' => array(
+        'account_id' => 57665093,
+        'specs' => array(
+          'hash' => 'eb0198bf8929ff3434583248c05c220f',
+          'status' => 1,
+        ),
+      )
+    );
+    parent::beforeEach();
+  }
+
+  public async function testImageEdit(): Awaitable<void> {
+    $log = await EditImagesActivityLoader::gen(
+      $this->viewerContext,
+      $this->extraData,
+      $this->headers,
+    );
+    expect(
+      $log->getExtraData(),
+    )->toEqual(
+      Map {
+        ActivityExtraDataFields::IMAGE_URL => Vector {
+          '',
+        },
+      },
+    );
+  }
+}
