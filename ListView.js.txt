@@ -1,0 +1,411 @@
+/**
+ * Copyright 2004-present Facebook. All Rights Reserved.
+ *
+ * @providesModule WindowedListView
+ * @flow
+ */
+'use strict';
+
+var React = require('React');
+var ScrollView = require('ScrollView');
+var Text = require('Text');
+var View = require('View');
+var ViewabilityHelper = require('ViewabilityHelper');
+
+var clamp = require('clamp');
+var deepDiffer = require('deepDiffer');
+var invariant = require('invariant');
+
+import type ReactComponent from 'ReactComponent';
+
+var DEBUG = false;
+
+class CellRenderer extends React.Component {
+  getChildContext(): Object {
+    return {recyclingKey: this.props.recyclingKey};
+  }
+  shouldComponentUpdate(newProps) {
+    return newProps.shouldUpdate;
+  }
+  render() {
+    var debug = DEBUG && <Text style={{backgroundColor: 'lightblue'}}>
+      Row: {this.props.rowIndex},
+    </Text>;
+    // var start = Date.now();
+    // while (Date.now() < start + 1000) {} // burn cpu to test perf effect.
+    return (
+      <View
+        onLayout={(e) => {
+          this.props.onMeasure(this.props.rowIndex, e.nativeEvent.layout);
+        }}>
+        {debug}
+        {this.props.render()}
+        {debug}
+      </View>
+    );
+  }
+}
+CellRenderer.propTypes = {
+  shouldUpdate: React.PropTypes.bool,
+  render: React.PropTypes.func,
+};
+CellRenderer.childContextTypes = {
+  recyclingKey: React.PropTypes.string,
+};
+
+
+/**
+ * An experimental ListView implementation that only renders a subset of rows of
+ * a potentially very large set of data.
+ *
+ * Row data should be provided as a simple array corresponding to rows.  `===`
+ * is used to determine if a row has changed and should be re-rendered.
+ *
+ * enableRecycling prop can be used to recycle components across rows within the
+ * React tree.  This may help scroll perf and memory allocation performance in
+ * some situations, but currently introduces bugs with setState usage.
+ *
+ * Rendering is done incrementally by row to minimize the amount of work done
+ * per JS event tick.
+ *
+ * Note there is also a special provision for scrolling back to the top extra
+ * fast - the state is reset so that only a single story is rendered to minimize
+ * the time displaying blank rows.
+ */
+class WindowedListView extends React.Component {
+  _rowCache: {[key: string]: mixed};
+  onScroll: Function;
+  _onMeasure: Function;
+  _viewableRows: Array<number>;
+  lastScrollEvent: Object;
+  enqueueComputeRowsToRender: Function;
+  computeRowsToRenderSync: Function;
+  scrollOffsetY: number;
+  height: number;
+  rowFrames: Array<Object>;
+  calledOnEndReached: bool;
+  willComputeRowsToRender: bool;
+  timeoutHandle: number;
+  incrementPending: bool;
+  constructor(props: Object) {
+    super(props);
+    invariant(
+      this.props.numToRenderAhead < this.props.maxNumToRender,
+      'WindowedListView: numToRenderAhead must be less than maxNumToRender'
+    );
+    this.onScroll = this.onScroll.bind(this);
+    this._onMeasure = this._onMeasure.bind(this);
+    this.lastScrollEvent = {rowFrames: []};
+    this.enqueueComputeRowsToRender = this.enqueueComputeRowsToRender.bind(this);
+    this.computeRowsToRenderSync = this.computeRowsToRenderSync.bind(this);
+    this.scrollOffsetY = 0;
+    this.height = 0;
+    this.rowFrames = [];
+    this.calledOnEndReached = false;
+    this.willComputeRowsToRender = false;
+    this.timeoutHandle = 0;
+    this.incrementPending = false;
+    this.state = {
+      firstRow: 0,
+      lastRow:
+        Math.min(this.props.data.length, this.props.initialNumToRender) - 1,
+      firstVisible: -1,
+      lastVisible: -1,
+    };
+  }
+  getScrollResponder(): ?ReactComponent {
+    return this.scrollRef &&
+      this.scrollRef.getScrollResponder &&
+      this.scrollRef.getScrollResponder();
+  }
+  onScroll(e: Object) {
+    this.scrollOffsetY = e.nativeEvent.contentOffset.y;
+    this.height = e.nativeEvent.layoutMeasurement.height;
+    this.enqueueComputeRowsToRender();
+    if (this.props.onViewableRowsChanged && this.rowFrames.length) {
+      var viewableRows = ViewabilityHelper.computeViewableRows(
+        this.rowFrames,
+        e.nativeEvent.contentOffset.y,
+        e.nativeEvent.layoutMeasurement.height
+      );
+      if (deepDiffer(viewableRows, this._viewableRows)) {
+        this._viewableRows = viewableRows;
+        this.props.onViewableRowsChanged(viewableRows);
+      }
+    }
+  }
+  componentWillReceiveProps(newProps: Object) {
+    // This has to happen immediately otherwise we could crash, e.g. if the data
+    // array has gotten shorter.
+    if (newProps.data.length < this.rowFrames.length) {
+      this.rowFrames = this.rowFrames.splice(0, newProps.data.length);
+    }
+    this.computeRowsToRenderSync(newProps);
+  }
+  _onMeasure(idx: number, layout: Object) {
+    if (!this.rowFrames[idx] ||
+        layout.height !== this.rowFrames[idx].height ||
+        layout.y !== this.rowFrames[idx].y) {
+      // Check for bad layout updates. These typically happen when we recycle a
+      // row: we'll first get an update based on the move operation before the
+      // new layout is computed, so we want to throw that out, then we'll get
+      // the correct update for the new layout later.  (#9070637)
+      for (let ii = idx - 1; ii > 0; ii--) {
+        const preceedingFrame = this.rowFrames[ii];
+        if (preceedingFrame) {
+          if (preceedingFrame.y > layout.y) {
+            DEBUG && console.log('bad frame: ', {idx, layout, rowFrames: this.rowFrames});
+            return; // Received frame that starts above a preceeding row
+          }
+          break;
+        }
+      }
+      for (let ii = idx + 1; ii < this.rowFrames.length; ii++) {
+        const followingFrame = this.rowFrames[ii];
+        if (followingFrame) {
+          if (followingFrame.y < layout.y) {
+            DEBUG && console.log('bad frame: ', {idx, layout, rowFrames: this.rowFrames});
+            return; // Received frame that starts below a following row
+          }
+          break;
+        }
+      }
+      this.rowFrames[idx] = {...layout};
+      this.enqueueComputeRowsToRender();
+    }
+  }
+  enqueueComputeRowsToRender(): void {
+    if (!this.willComputeRowsToRender) {
+      this.willComputeRowsToRender = true; // batch up computations
+      clearTimeout(this.timeoutHandle);
+      this.timeoutHandle = setTimeout(() => {
+        this.willComputeRowsToRender = false;
+        this.incrementPending = false;
+        this.computeRowsToRenderSync(this.props);
+      }, this.props.incrementDelay);
+    }
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timeoutHandle);
+  }
+  computeRowsToRenderSync(props: Object): void {
+    var totalRows = props.data.length;
+    if (totalRows === 0) {
+      this.setState({
+        firstRow: 0,
+        lastRow: -1,
+        firstVisible: -1,
+        lastVisible: -1,
+      });
+      return;
+    }
+    var rowFrames = this.rowFrames;
+    var firstVisible = -1;
+    var lastVisible = 0;
+    var top = this.scrollOffsetY;
+    var bottom = top + this.height;
+    for (var idx = 0; idx < rowFrames.length; idx++) {
+      var frame = rowFrames[idx];
+      if (!frame) {
+        // No frame - sometimes happens when they come out of order, so just
+        // wait for the rest.
+        return;
+      }
+      if (((frame.y + frame.height) > top) && (firstVisible < 0)) {
+        firstVisible = idx;
+      }
+      if (frame.y < bottom) {
+        lastVisible = idx;
+      } else {
+        break;
+      }
+    }
+    if (firstVisible === -1) {
+      firstVisible = 0;
+    }
+    this._updateVisibleRows(firstVisible, lastVisible);
+    if (this.state.firstRow > firstVisible) {
+      console.warn(
+        'First visible is no longer rendered - reset to only render the ' +
+          'firstVisible story.', {firstVisible, lastVisible}
+      );
+      this.setState({firstRow: firstVisible, lastRow: firstVisible});
+      this.enqueueComputeRowsToRender(); // Make sure an increment is queued
+      this.calledOnEndReached = false;
+      return;
+    }
+    var numRendered = this.state.lastRow - this.state.firstRow + 1;
+    // Our last row target that we will approach incrementally
+    var targetLastRow = clamp(
+      numRendered - 1, // Don't reduce numRendered when scrolling back up
+      lastVisible + props.numToRenderAhead, // Primary goal
+      totalRows - 1, // Don't render past the end
+    );
+    var lastRow = this.state.lastRow;
+    // Increment the last row one at a time per JS event loop
+    if (!this.incrementPending) {
+      if (targetLastRow > this.state.lastRow) {
+        lastRow++;
+        this.incrementPending = true;
+      } else if (targetLastRow < this.state.lastRow) {
+        lastRow--;
+        this.incrementPending = true;
+      }
+    }
+    // Once last row is set, figure out the first row
+    var firstRow = Math.max(
+      0, // Don't render past the top
+      lastRow - props.maxNumToRender + 1, // Don't exceed max to render
+      lastRow - numRendered, // Don't render more than 1 additional row
+    );
+    if (lastRow >= totalRows) {
+      // It's possible that the number of rows decreased by more than one
+      // increment could compensate for.  Need to make sure we don't render more
+      // than one new row at a time, but don't want to render past the end of
+      // the data.
+      lastRow = totalRows - 1;
+    }
+    if (props.onEndReached) {
+      // Make sure we call onEndReached exactly once every time we reach the
+      // end.  Resets if scoll back up and down again.
+      var willBeAtTheEnd = lastRow === (totalRows - 1);
+      if (willBeAtTheEnd && !this.calledOnEndReached) {
+        props.onEndReached();
+        this.calledOnEndReached = true;
+      } else {
+        // If lastRow is changing, reset so we can call onEndReached again
+        this.calledOnEndReached = this.state.lastRow === lastRow;
+      }
+    }
+    if (this.state.firstRow !== firstRow || this.state.lastRow !== lastRow) {
+      console.log('row render range changed:', {firstRow, lastRow});
+      this.setState({firstRow, lastRow});
+    }
+    if (lastRow !== targetLastRow) {
+      this.enqueueComputeRowsToRender(); // Make sure another increment is queued
+    }
+  }
+  _updateVisibleRows(newFirstVisible: number, newLastVisible: number) {
+    if (this.state.firstVisible !== newFirstVisible ||
+        this.state.lastVisible !== newLastVisible) {
+      if (this.props.onVisibleRowsChanged) {
+        this.props.onVisibleRowsChanged(
+          newFirstVisible,
+          newLastVisible - newFirstVisible + 1);
+      }
+      this.setState({
+        firstVisible: newFirstVisible,
+        lastVisible: newLastVisible,
+      });
+    }
+  }
+  render() {
+    DEBUG && console.log('render WindowedListView', {state: this.state});
+    this._rowCache = this._rowCache || {};
+    var firstRow = this.state.firstRow;
+    var lastRow = this.state.lastRow;
+    var rowFrames = this.rowFrames;
+    var rows = [];
+    var height = 0;
+    if (rowFrames[firstRow]) {
+      var firstFrame = rowFrames[firstRow];
+      height = firstFrame.y;
+    }
+    if (firstRow !== 0 && this.props.renderWindowBoundaryIndicator) {
+      height -= this.state.boundaryIndicatorHeight || 0;
+      rows.push(<View key="sp-top" style={{height}} />);
+      rows.push(
+        <View
+          key="ind-top"
+          onLayout={(e) => {
+            const layout = e.nativeEvent.layout;
+            if (layout.height !== this.state.boundaryIndicatorHeight) {
+              this.setState({
+                boundaryIndicatorHeight: layout.height,
+              });
+            }
+          }}>
+          {this.props.renderWindowBoundaryIndicator()}
+        </View>
+      );
+    } else {
+      rows.push(<View key="sp-top" style={{height}} />);
+    }
+    for (var idx = firstRow; idx <= lastRow; idx++) {
+      var data = this.props.data[idx];
+      var key = '' + (this.props.enableRecycling ? (idx % this.props.maxNumToRender) : idx);
+      rows.push(
+        <CellRenderer
+          key={key}
+          recyclingKey={key}
+          rowIndex={idx}
+          onMeasure={this._onMeasure}
+          shouldUpdate={data !== this._rowCache[key]}
+          render={this.props.renderRow.bind(
+            null, data, 0, idx, key
+          )}
+        />
+      );
+      this._rowCache[key] = data;
+    }
+    if (lastRow === this.props.data.length - 1) {
+      if (this.props.renderFooter) {
+        rows.push(this.props.renderFooter());
+      }
+    } else {
+      if (this.props.renderWindowBoundaryIndicator) {
+        rows.push(
+          <View
+            key="ind-bot"
+            onLayout={(e) => {
+              const layout = e.nativeEvent.layout;
+              if (layout.height !== this.state.boundaryIndicatorHeight) {
+                this.setState({
+                  boundaryIndicatorHeight: layout.height,
+                });
+              }
+            }}>
+            {this.props.renderWindowBoundaryIndicator()}
+          </View>
+        );
+      }
+    }
+    if (this.state.firstRow !== 0 && this.state.boundaryIndicatorHeight !== undefined) {
+      var contentInset = {
+        top: this.state.boundaryIndicatorHeight - rowFrames[firstRow].y
+      };
+    }
+    return (
+      <ScrollView
+        scrollEventThrottle={50}
+        removeClippedSubviews={true}
+        contentInset={contentInset}
+        {...this.props}
+        ref={(ref) => { this.scrollRef = ref; }}
+        onScroll={this.onScroll}>
+        {rows}
+      </ScrollView>
+    );
+  }
+}
+WindowedListView.propTypes = {
+  data: React.PropTypes.arrayOf(React.PropTypes.object).isRequired,
+  renderRow: React.PropTypes.func.isRequired,
+  renderWindowBoundaryIndicator: React.PropTypes.func,
+  renderFooter: React.PropTypes.func,
+  onVisibleRowsChanged: React.PropTypes.func,
+  onViewableRowsChanged: React.PropTypes.func,
+  enableRecycling: React.PropTypes.bool,
+  incrementDelay: React.PropTypes.number,
+  initialNumToRender: React.PropTypes.number,
+  maxNumToRender: React.PropTypes.number,
+  numToRenderAhead: React.PropTypes.number,
+};
+WindowedListView.defaultProps = {
+  enableRecycling: false,
+  incrementDelay: 17,
+  initialNumToRender: 1,
+  maxNumToRender: 10,
+  numToRenderAhead: 4,
+};
+module.exports = WindowedListView;
