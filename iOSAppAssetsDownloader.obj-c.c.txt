@@ -1,0 +1,168 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+#import <Foundation/Foundation.h>
+
+#import <FBProvider/FBClassProvidable.h>
+
+typedef void (^succesBlock)(NSString *urlString);
+typedef void (^failureBlock)(NSString *urlString, NSString *errorMessage);
+
+@interface FBWebRTCAssetDownloader : NSObject<FBClassProvidable>
+
+- (instancetype)init;
+- (void)downloadFileIfNotExistsAsync:(NSString *)urlString
+                         withSuccess:(succesBlock)successBlock
+                           orFailure:(failureBlock)failureBlock;
+
+- (NSString *)urlToFilePath:(NSString *)urlString;
+- (BOOL)fileExistsForUrl:(NSString *)urlString;
+- (BOOL)removeFileForUrl:(NSString *)urlString;
+
+@end
+////////////////////////////////////////////////////////////////////////
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+#import "FBWebRTCAssetDownloader.h"
+
+#import <FBProvider/FBProviderMapData.h>
+
+static NSString *FBWebRTCAssetPathForFileName(NSString *fileName)
+{
+  NSString *relativePath = [@"/FBMessenger.bundle/" stringByAppendingString:fileName];
+  NSBundle *mainBundle = [NSBundle mainBundle];
+  NSString *pathToBundle = mainBundle.resourcePath;
+  return [pathToBundle stringByAppendingString:relativePath];
+}
+
+static NSString *FBWebRTCUrlToHash(NSString *urlString)
+{
+  int h = 0;
+  int len = (int)urlString.length;
+  for (int i = 0; i < len; i++) {
+    h = (31 * h) + [urlString characterAtIndex:i];
+  }
+  NSString *outString = [[NSString alloc] initWithFormat:@"%d", h];
+  return outString;
+}
+
+@interface FBWebRTCAssetDownloader () {
+  NSString *_errorMessage;
+  dispatch_queue_t _queue;
+}
+
+@end
+
+@implementation FBWebRTCAssetDownloader
+
+- (instancetype)init
+{
+  if (self = [super init]) {
+    _queue = dispatch_queue_create("com.facebook.messenger.FBWebRTCAssetDownloaderQueue",
+                                         DISPATCH_QUEUE_SERIAL);
+  }
+  return self;
+}
+
+- (instancetype)initWithProviderMapData:(FBProviderMapData *)mapData
+{
+  return [self init];
+}
+
+- (void)downloadFileIfNotExistsAsync:(NSString *)urlString
+                         withSuccess:(succesBlock)successBlock
+                           orFailure:(failureBlock)failureBlock
+{
+  dispatch_async(_queue, ^(void) {
+    [self _downloadFileIfNotExists:urlString
+                       withSuccess:successBlock
+                         orFailure:failureBlock];
+  });
+}
+
+
+- (NSString *)urlToFilePath:(NSString *)urlString
+{
+  NSString *hash = FBWebRTCUrlToHash(urlString);
+  NSString *name = [@"fb_voicemail_asset_" stringByAppendingString:hash];
+  NSString *path = FBWebRTCAssetPathForFileName(name);
+  return path;
+}
+
+- (BOOL)fileExistsForUrl:(NSString *)urlString
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSString *path = [self urlToFilePath:urlString];
+  return [fileManager fileExistsAtPath:path];
+}
+
+- (BOOL)removeFileForUrl:(NSString *)urlString
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSString *path = [self urlToFilePath:urlString];
+  return [fileManager removeItemAtPath:path error:NULL];
+}
+
+# pragma mark - private
+
+- (void)_downloadFileIfNotExists:(NSString *)urlString
+                     withSuccess:(succesBlock)successBlock
+                       orFailure:(failureBlock)failureBlock
+{
+  BOOL exists = [self fileExistsForUrl:urlString];
+  if (exists) {
+    successBlock(urlString);
+  } else {
+    [self _downloadAndCacheForUrl:urlString
+                      withSuccess:successBlock
+                        orFailure:failureBlock];
+  }
+}
+
+- (void)_downloadAndCacheForUrl:(NSString *)urlString
+                    withSuccess:(succesBlock)successBlock
+                      orFailure:(failureBlock)failureBlock
+{
+  // downloading...
+  NSData *data = [self _downloadFileForUrl:urlString];
+  if (data) {
+    // downloaded, caching...
+    if ([self _cacheData:data forUrl:urlString]) {
+      successBlock(urlString);
+    } else {
+      // caching failed
+      failureBlock(urlString, @"error writing to disk");
+    }
+  } else {
+    // download failed
+    failureBlock(urlString, _errorMessage);
+  }
+}
+
+- (NSData *)_downloadFileForUrl:(NSString *)urlString
+{
+  NSURLRequest *urlRequest = [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+  NSError *error = nil;
+  NSData *data = [NSURLConnection sendSynchronousRequest:urlRequest
+                                        returningResponse:NULL
+                                                    error:&error];
+  if (error == nil) {
+    return data;
+  } else {
+    _errorMessage = [error localizedDescription];
+    return nil;
+  }
+}
+
+- (BOOL)_cacheData:(NSData *)data forUrl:(NSString *)urlString
+{
+  NSFileManager *fileManager = [NSFileManager defaultManager];
+  NSString *path = [self urlToFilePath:urlString];
+  BOOL fileExists = [fileManager fileExistsAtPath:path];
+  if (!fileExists) {
+    return [data writeToFile:path atomically:YES];
+  } else {
+    return NO;
+  }
+}
+
+@end
