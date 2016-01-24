@@ -1,0 +1,75 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+package com.facebook.catalyst.modules.appstate;
+
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.ReactMethod;
+import com.facebook.react.bridge.LifecycleEventListener;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
+
+/**
+ * Module responsible for informing JS of host lifecycle events (resume, pause, destroy).
+ * The state of the module is uninitialized until it is properly set up in initialized(). Only
+ * after this module is initialized, can it actually be used. The module will stay "initialized"
+ * until it is either paused or resumed.
+ * Currently, we are tied to the lifecycle of one fragment, but when we move away from that, we'll
+ * have to revisit sending these events per fragment and per app.
+ */
+public class AppStateModule extends ReactContextBaseJavaModule
+    implements LifecycleEventListener {
+
+  public static final String APP_STATE_INITIALIZED = "initialized";
+  public static final String APP_STATE_RESUMED = "resumed";
+  public static final String APP_STATE_PAUSED = "paused";
+  private String mAppState = "uninitialized";
+
+  public AppStateModule(ReactApplicationContext reactContext) {
+    super(reactContext);
+  }
+
+  @ReactMethod
+  public void getCurrentAppState(Callback successCallback, Callback errorCallback) {
+    successCallback.invoke(mAppState);
+  }
+
+  @Override
+  public String getName() {
+    return "AppStateAndroid";
+  }
+
+  @Override
+  public void initialize() {
+    getReactApplicationContext().addLifecycleEventListener(this);
+    mAppState = APP_STATE_INITIALIZED;
+  }
+
+  @Override
+  public void onHostResume() {
+    mAppState = APP_STATE_RESUMED;
+    handleLifecycleEvent();
+  }
+
+  @Override
+  public void onHostPause() {
+    mAppState = APP_STATE_PAUSED;
+    handleLifecycleEvent();
+  }
+
+  @Override
+  public void onHostDestroy() {
+    // do not set state to destroyed, do not send an event. By the current implementation, the
+    // catalyst instance is going to be immediately dropped, and all JS calls with it.
+  }
+
+  @Override
+  public void onCatalystInstanceDestroy() {
+  }
+
+  private void handleLifecycleEvent() {
+    getReactApplicationContext().getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+        .emit("appLifecycleEvent", mAppState);
+  }
+}
