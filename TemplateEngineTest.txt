@@ -1,0 +1,21 @@
+<php
+tpl_set('home_announcement', $home_announcement_tpl);
+tpl_set('hide_announcement_bit', $HIDE_ANNOUNCEMENT_BIT);
+tpl_set('orientation_info', $orientation_info);
+tpl_set('feed_stories', $feed_stories);
+
+if ($show_friend_finder && (user_get_friend_count($user) > 20)) {
+    tpl_set('friend_finder_hide_options', array('text' => 'close', 'onclick' => "return clearFriendFinder()"));
+}
+
+//end of page has this
+render_template($_SERVER['PHP_ROOT'] . '/html/home.phpt');
+?>
+	
+//mytemplate.php
+<h1><?php echo $title; ?></h1>
+<p><?php echo $content; ?></p>
+	
+$title = 'some title';
+$content = 'Hello world';
+require 'mytemplate.php';
