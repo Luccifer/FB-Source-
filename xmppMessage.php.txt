@@ -1,0 +1,248 @@
+<?php
+
+
+class xmppMessage {
+
+
+
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+private $STREAM_XML = '<stream:stream xmlns:stream="http://etherx.jabber.org/streams" version="1.0" xmlns="jabber:client" to="chat.facebook.com" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">';
+
+private $AUTH_XML = '<auth xmlns="urn:ietf:params:xml:ns:xmpp-sasl" mechanism="X-FACEBOOK-PLATFORM"></auth>';
+
+private $CLOSE_XML = '</stream:stream>';
+
+private $RESOURCE_XML = '<iq type="set" id="3"><bind xmlns="urn:ietf:params:xml:ns:xmpp-bind"><resource>fb_xmpp_script</resource></bind></iq>';
+
+private $SESSION_XML = '<iq type="set" id="4" to="chat.facebook.com"><session xmlns="urn:ietf:params:xml:ns:xmpp-session"/></iq>';
+
+private $START_TLS = '<starttls xmlns="urn:ietf:params:xml:ns:xmpp-tls"/>';
+
+
+
+
+private function open_connection($server) {
+  print "[INFO] Opening connection... ";
+
+  $fp = fsockopen($server, 5222, $errno, $errstr);
+  if (!$fp) {
+    print "$errstr ($errno)<br>";
+  } else {
+    print "connnection open<br>";
+  }
+
+  return $fp;
+}
+
+private function send_xml($fp, $xml) {
+  fwrite($fp, $xml);
+}
+
+private function recv_xml($fp,  $size=4096) {
+  $xml = fread($fp, $size);
+  if ($xml === "") {
+     return null;
+  }
+
+  // parses xml
+  $xml_parser = xml_parser_create();
+  xml_parse_into_struct($xml_parser, $xml, $val, $index);
+  xml_parser_free($xml_parser);
+  while (count($val) == 0) {
+    // The parse failed.  We probably got a partial packet.  Read more
+    $xml .= fread($fp, $size);
+    // Have to create a new parser each time the XML changes.
+    $xml_parser = xml_parser_create();
+    xml_parse_into_struct($xml_parser, $xml, $val, $index);
+    xml_parser_free($xml_parser);
+  }
+
+  return array($val, $index);
+}
+
+private function find_xmpp($fp,  $tag, $value=null, &$ret=null) {
+  static $val = null, $index = null;
+
+  do {
+    if ($val === null && $index === null) {
+      list($val, $index) = $this->recv_xml($fp);
+      if ($val === null || $index === null) {
+        return false;
+      }
+    }
+
+    foreach ($index as $tag_key => $tag_array) {
+      if ($tag_key === $tag) {
+        if ($value === null) {
+          if (isset($val[$tag_array[0]]['value'])) {
+            $ret = $val[$tag_array[0]]['value'];
+          }
+          return true;
+        }
+        foreach ($tag_array as $i => $pos) {
+          if ($val[$pos]['tag'] === $tag && isset($val[$pos]['value']) &&
+            $val[$pos]['value'] === $value) {
+              $ret = $val[$pos]['value'];
+              return true;
+          }
+        }
+      }
+    }
+    $val = $index = null;
+  } while (!feof($fp));
+
+  return false;
+}
+
+
+private function xmpp_connect($options, $access_token) {
+
+  $fp = $this->open_connection($options['server']);
+  if (!$fp) {
+    return false;
+  }
+  else
+    echo "111111";
+
+  // initiates auth process (using X-FACEBOOK_PLATFORM)
+  $this->send_xml($fp,  $this->STREAM_XML);
+  if (!$this->find_xmpp($fp, 'STREAM:STREAM')) {
+    return false;
+  }
+   else
+    echo "2222222";
+  if (!$this->find_xmpp($fp,  'MECHANISM', 'X-FACEBOOK-PLATFORM')) {
+    return false;
+  }
+     else
+    echo "33333333";
+
+  // starting tls - MANDATORY TO USE OAUTH TOKEN!!!!
+  $this->send_xml($fp,  $this->START_TLS);
+  if (!$this->find_xmpp($fp, 'PROCEED', null, $proceed)) {
+    return false;
+  }
+       else
+    echo "444444444";
+  stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+
+  $this->send_xml($fp, $this->STREAM_XML);
+  if (!$this->find_xmpp($fp, 'STREAM:STREAM')) {
+    return false;
+  }
+         else
+    echo "55555555555";
+  if (!$this->find_xmpp($fp, 'MECHANISM', 'X-FACEBOOK-PLATFORM')) {
+    return false;
+  }       else
+    echo "66666666666";
+
+  // gets challenge from server and decode it
+  $this->send_xml($fp, $this->AUTH_XML);
+  if (!$this->find_xmpp($fp,  'CHALLENGE', null, $challenge)) {
+    return false;
+  }
+         else
+    echo "77777777777";
+  $challenge = base64_decode($challenge);
+  $challenge = urldecode($challenge);
+  parse_str($challenge, $challenge_array);
+
+  // creates the response array
+  $resp_array = array(
+    'method' => $challenge_array['method'],
+    'nonce' => $challenge_array['nonce'],
+    'access_token' => $access_token,
+    'api_key' => $options['app_id'],
+    'call_id' => 0,
+    'v' => '1.0',
+  );
+  // creates signature
+  $response = http_build_query($resp_array);
+
+  // sends the response and waits for success
+  $xml = '<response xmlns="urn:ietf:params:xml:ns:xmpp-sasl">'.
+    base64_encode($response).'</response>';
+  $this->send_xml($fp, $xml);
+  if (!$this->find_xmpp($fp, 'SUCCESS')) {
+    return false;
+  }
+         else
+    echo "8888888888";
+
+  // finishes auth process
+  $this->send_xml($fp, $this->STREAM_XML);
+  if (!$this->find_xmpp($fp,'STREAM:STREAM')) {
+    return false;
+  }
+         else
+    echo "99999999999";
+  if (!$this->find_xmpp($fp, 'STREAM:FEATURES')) {
+    return false;
+  }
+         else
+    echo "10101010";
+ $this->send_xml($fp, $this->RESOURCE_XML);
+  if (!$this->find_xmpp($fp, 'JID')) {
+    return false;
+  }
+         else
+    echo "11111111";
+  $this->send_xml($fp, $this->SESSION_XML);
+  if (!$this->find_xmpp($fp, 'SESSION')) {
+    return false;
+  }
+         else
+    echo "12121212121212";
+
+    $MESSAGE = '<message from="-' . $options['uid'] . '@chat.facebook.com" to="-10000005096565@chat.facebook.com"><body>Testmessage</body></message>';
+
+    $this->send_xml($fp, $MESSAGE);
+    if (!$this->find_xmpp($fp, 'BODY')) {
+        return false;
+    }
+         else
+    echo "1313131313";
+
+  // we made it!
+  $this->send_xml($fp, $this->CLOSE_XML);
+  print ("Authentication complete<br>");
+  fclose($fp);
+
+  return true;
+}
+
+
+
+
+public function sendMessage() {
+  print "Test platform connect for XMPP<br>";
+  $app_id='xxxxxxxxxx';
+  $uid = '1000009533542xxx';
+  $access_token = user::$currentUserFbAccessToken;
+
+  $options = array(
+    'uid' => $uid,
+    'app_id' => $app_id,
+    'server' => 'chat.facebook.com',
+   );
+
+  // prints options used
+  print "server: ".$options['server']."<br>";
+  print "uid: ".$options['uid']."<br>";
+  print "app id: ".$options['app_id']."<br>";
+   print "token: ".user::$currentUserFbAccessToken."<br>";
+   if (empty(user::$currentUserFbAccessToken))
+    return false;
+
+  if ($this->xmpp_connect($options, $access_token)) {
+    print "Done<br>";
+  } else {
+    print "An error ocurred<br>";
+  }
+
+}
+
+
+}

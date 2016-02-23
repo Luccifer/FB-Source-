@@ -1,0 +1,46 @@
+<?hh
+class ConnectionManager {
+    protected Vector<AsyncMysqlConnection> $freeConnections = Vector {};
+    public function getFreeConnection():AsyncMysqlConnection {
+        try {
+            return $this->freeConnections->pop();
+        } catch (Exception $e) {
+            //Create new Connection
+            throw $e;
+        }
+    }
+    public function free(AsyncMysqlConnection $connection) {
+        $this->freeConnections->add($connection);
+    }
+}
+class Connection {
+    protected ?AsyncMysqlConnection $connection;
+    public function __construct(protected ConnectionManager $manager) {
+
+    }
+
+    public function queryf($query):Awaitable<AsyncMysqlResult> {
+        $this->connection = $this->manager->getFreeConnection();
+        return $this->manager->getFreeConnection()->queryf($query);
+    }
+
+    public function close():void {
+        if ($this->connection) {
+            $this->manager->free($this->connection);
+        }
+    }
+}
+class ConnectionPool {
+    protected ConnectionManager $manager;
+    public function __construct() {
+        $this->manager = new ConnectionManager();
+    }
+    public function getConnection():Connection {
+        return new Connection($this->manager);
+    }
+}
+
+$pool = new ConnectionPool();
+for ($i = 0; $i < 100; $i++) {
+    $pool->getConnection();
+}

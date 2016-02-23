@@ -1,0 +1,103 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+package com.facebook.rtc.voicemail;
+
+import javax.inject.Inject;
+
+import java.util.Locale;
+
+import com.facebook.common.util.StringUtil;
+import com.facebook.debug.log.BLog;
+import com.facebook.http.protocol.SingleMethodRunner;
+import com.facebook.inject.AutoBind;
+import com.facebook.prefs.shared.FbSharedPreferences;
+import com.facebook.prefs.shared.PrefKey;
+import com.facebook.rtc.RtcModule;
+import com.facebook.rtc.prefs.VoipPrefKeys;
+import com.facebook.xconfig.sync.XSyncApiMethodProvider;
+import com.facebook.xconfig.sync.XSyncConfigResult;
+import com.facebook.xconfig.sync.XSyncParams;
+import com.facebook.xconfig.sync.XSyncResult;
+
+import com.google.common.collect.ImmutableMap;
+
+@AutoBind(inModule = RtcModule.class)
+public class VoicemailAssetUrlFetcher {
+
+  private XSyncApiMethodProvider mXSyncApiMethodProvider;
+  private SingleMethodRunner mSingleMethodRunner;
+  private FbSharedPreferences mFbSharedPreferences;
+
+  private static final long CACHE_EXPIRATION_TIME_MS = 3*24*60*60*1000;
+  private static final String CONFIG_NAME = "android_messenger_voicemail";
+  private static final String LANGUAGE = Locale.getDefault().getLanguage();
+
+  private static final Class<?> TAG = VoicemailAssetUrlFetcher.class;
+
+  @Inject
+  public VoicemailAssetUrlFetcher(
+      XSyncApiMethodProvider xSyncApiMethodProvider,
+      SingleMethodRunner singleMethodRunner,
+      FbSharedPreferences fbSharedPreferences) {
+    mXSyncApiMethodProvider = xSyncApiMethodProvider;
+    mSingleMethodRunner = singleMethodRunner;
+    mFbSharedPreferences = fbSharedPreferences;
+  }
+
+  public String getOrFetchAssetUrl() {
+    String url = getCachedAssetUrl();
+    BLog.d("VoicemailHandler", "Cached url: " + url);
+    if (url == null) {
+      url = fetchAssetUrl();
+      BLog.d("VoicemailHandler", "Fetched url: " + url);
+    }
+    return url;
+  }
+
+  private String fetchAssetUrl() {
+    // Constructing params for request
+    String key = CONFIG_NAME + "!!" + LANGUAGE;
+    String val = "";
+    ImmutableMap<String, String> map = ImmutableMap.of(key, val);
+    XSyncParams xSyncParams = new XSyncParams(map, false);
+
+    try {
+      // Making request
+      XSyncResult xSyncResult = mSingleMethodRunner.run(mXSyncApiMethodProvider.get(null), xSyncParams);
+      // Parsing result
+      BLog.d("VoicemailHandler", xSyncResult.configResults.toString());
+
+      XSyncConfigResult xSyncConfigResult = xSyncResult.configResults.get(CONFIG_NAME);
+      BLog.d("VoicemailHandler", xSyncConfigResult.settingNamesToValues.toString());
+
+      String url = xSyncConfigResult.settingNamesToValues.get(LANGUAGE);
+      if (StringUtil.isEmptyOrNull(url)) {
+        return null;
+      }
+      // Caching result
+      mFbSharedPreferences.edit()
+          .putString(VoipPrefKeys.VOICEMAIL_ASSET_URL_KEY, url)
+          .putLong(VoipPrefKeys.VOICEMAIL_DOWNLOAD_TIME_KEY, System.currentTimeMillis())
+          .commit();
+      return url;
+    } catch (Exception e) {
+      BLog.d("VoicemailHandler", e.toString());
+      BLog.d(TAG, "Fetching voicemail asset url exception", e);
+      return null;
+    }
+  }
+
+  private String getCachedAssetUrl() {
+    String url = mFbSharedPreferences.getString(VoipPrefKeys.VOICEMAIL_ASSET_URL_KEY, null);
+    long downloadTime = mFbSharedPreferences.getLong(VoipPrefKeys.VOICEMAIL_DOWNLOAD_TIME_KEY, -1);
+    if (System.currentTimeMillis() - downloadTime > CACHE_EXPIRATION_TIME_MS) {
+      // Invalidate cache
+      mFbSharedPreferences.edit()
+          .remove(VoipPrefKeys.VOICEMAIL_DOWNLOAD_TIME_KEY)
+          .remove(VoipPrefKeys.VOICEMAIL_ASSET_URL_KEY)
+          .commit();
+      return null;
+    }
+    return url;
+  }
+}

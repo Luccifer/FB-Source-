@@ -18,3 +18,53 @@ Fatal error: exception Sys_error("Broken pipe")
 
 
 Type intl_string.php --help to get more information about how to use this script.
+
+
+
+[1032] __tests__ {arcpatch-D1159711} $ t EditImagesActivityLoaderTest.php
+        FAIL  EditImagesActivityLoaderTest (0.305s)
+Path: flib/ads/logging/business_activity_log/log_reader_new/activity_loader/__tests__/EditImagesActivityLoaderTest.php
+
+Exception: ErrorException: Argument 1 passed to BusinessActivityLoader::getExternalFacingEventType() must be an instance of string, null given
+
+/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php : 364
+/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php : 90
+/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php : 379
+/data/users/schatterjee/www-hg/flib/intern/testinfra/cli/UnittestCLI.php : 543
+/data/users/schatterjee/www-hg/flib/ads/logging/business_activity_log/log_reader_new/BusinessActivityLoader.php : 14
+/data/users/schatterjee/www-hg/flib/ads/logging/business_activity_log/log_reader_new/BusinessActivityLoader.php : 214
+/data/users/schatterjee/www-hg/flib/ads/logging/business_activity_log/log_reader_new/activity_loader/__tests__/EditImagesActivityLoaderTest.php : 31
+/data/users/schatterjee/www-hg/flib/intern/testinfra/util.php : 526
+/data/users/schatterjee/www-hg/flib/intern/testinfra/cli/UnittestCLI.php : 16
+
+Running test:
+        => flib/ads/logging/business_activity_log/log_reader_new/activity_loader/__tests__/EditImagesActivityLoaderTest.php
+E
+
+There was 1 error:
+
+1) EditImagesActivityLoaderTest::testImageEdit
+ErrorException: Argument 1 passed to BusinessActivityLoader::getExternalFacingEventType() must be an instance of string, null given
+
+trace starts at [/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php:364]
+/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php:364
+/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php:90
+/data/users/schatterjee/www-hg/flib/intern/testinfra/automock/Automocker.php:379
+/data/users/schatterjee/www-hg/flib/ads/logging/business_activity_log/log_reader_new/BusinessActivityLoader.php:14
+/data/users/schatterjee/www-hg/flib/ads/logging/business_activity_log/log_reader_new/BusinessActivityLoader.php:214
+/data/users/schatterjee/www-hg/flib/ads/logging/business_activity_log/log_reader_new/activity_loader/__tests__/EditImagesActivityLoaderTest.php:31
+/data/users/schatterjee/www-hg/flib/intern/third-party/phpunit/phpunit/PHPUnit/Framework/TestCase.php:753
+/data/users/schatterjee/www-hg/flib/intern/third-party/phpunit/phpunit/PHPUnit/Framework/TestCase.php:636
+/data/users/schatterjee/www-hg/flib/intern/third-party/phpunit/phpunit/PHPUnit/Framework/TestResult.php:674
+/data/users/schatterjee/www-hg/flib/intern/third-party/phpunit/phpunit/PHPUnit/Framework/TestCase.php:582
+/data/users/schatterjee/www-hg/flib/intern/third-party/phpunit/phpunit/PHPUnit/Framework/TestSuite.php:763
+/data/users/schatterjee/www-hg/flib/intern/third-party/phpunit/phpunit/PHPUnit/Framework/TestSuite.php:739
+/data/users/schatterjee/www-hg/flib/intern/testinfra/util.php:526
+/data/users/schatterjee/www-hg/flib/intern/testinfra/util.php:905
+/data/users/schatterjee/www-hg/html/intern/unittest/run/single.php:294
+
+FAILURES!
+Tests: 1, Assertions: 0, Errors: 1.
+
+FAILURES!
+(1 tests, 0 assertions, 0 incomplete, 1 failures)

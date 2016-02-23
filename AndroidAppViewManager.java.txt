@@ -1,0 +1,21 @@
+// Copyright 2004-present Facebook. All Rights Reserved.
+
+package com.facebook.catalyst.shadow.flat;
+
+import android.view.View;
+
+import com.facebook.react.uimanager.ThemedReactContext;
+import com.facebook.react.uimanager.BaseViewManager;
+import com.facebook.react.uimanager.ViewGroupManager;
+
+abstract class FlatViewManager<C extends FlatShadowNode> extends BaseViewManager<FlatViewGroup, C> {
+
+  @Override
+  protected FlatViewGroup createViewInstance(ThemedReactContext reactContext) {
+    return new FlatViewGroup(reactContext);
+  }
+
+  @Override
+  public void updateExtraData(FlatViewGroup root, Object extraData) {
+  }
+}

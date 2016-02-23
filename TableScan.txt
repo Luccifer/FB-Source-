@@ -1,0 +1,38 @@
+Configuration conf = HBaseConfiguration.create();
+HTable table = new HTable(conf, tableName.getBytes());
+
+System.out.println("scanning full table:");
+ResultScanner scanner = table.getScanner(new Scan());
+for (Result rr = scanner.next(); rr != null; rr = scanner.next()) {
+  byte[] key == rr.getRow();
+  ...
+}
+	
+Configuration conf = HBaseConfiguration.create();
+HTable table = new HTable(conf, tableName.getBytes());
+System.out.println("scanning full table:");
+Scan scan = new Scan();
+scan.setFilter(new FirstKeyOnlyFilter());
+ResultScanner scanner = table.getScanner(scan);
+for (Result rr : scanner) {
+  byte[] key == rr.getRow();
+  ...
+}
+	
+<? $_SERVER['PHP_ROOT'] = realpath(dirname(__FILE__).'/..');
+   require_once $_SERVER['PHP_ROOT'].'/flib/__flib.php';
+   flib_init(FLIB_CONTEXT_SCRIPT);
+   require_module('storage/hbase');
+   $hbase = new HBase('<server_name_running_thrift_server>', <port on which thrift server is running>);
+   $hbase->open();
+   $client = $hbase->getClient();
+   $result = $client->scannerOpenWithFilterString('table_name', "(PrefixFilter ('row2') AND (QualifierFilter (>=, 'binary:xyz'))) AND (TimestampsFilter ( 123, 456))");
+   $to_print = $client->scannerGetList($result,1);
+   while ($to_print) {
+      print_r($to_print);
+      $to_print = $client->scannerGetList($result,1);
+    }
+   $client->scannerClose($result);
+?>
+	
+count 'table_name', INTERVAL => 1

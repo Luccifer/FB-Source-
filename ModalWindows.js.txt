@@ -1,0 +1,130 @@
+/**
+ * Copyright 2004-present Facebook. All Rights Reserved.
+ *
+ * @providesModule RKModal
+ * @flow
+ */
+'use strict';
+
+var Portal = require('Portal');
+var React = require('React');
+var ReactChildren = require('ReactChildren');
+var StyleSheet = require('StyleSheet');
+var TouchableWithoutFeedback = require('TouchableWithoutFeedback');
+var View = require('View');
+
+/**
+ * Displays given contents on top of everything else in the application UI.
+ *
+ * The `isOpen` property determines whether to show or hide the modal.
+ *
+ * ```
+ * return (
+ *   <Modal
+ *     onRequestClose={() => this.setState({ isModalOpen: false })}
+ *     isOpen={this.state.isModalOpen}>
+ *     <View ...
+ *   </Modal>
+ * );
+ * ```
+ */
+var Modal = React.createClass({
+
+  _tag: '',
+
+  propTypes: {
+    /**
+     * The contents of the modal
+     */
+    children: React.PropTypes.any,
+
+    /**
+     * If true, the modal will be rendered
+     */
+    isOpen: React.PropTypes.bool.isRequired,
+
+    /**
+     * Style applied to the immediate wrapper of inner content.
+     */
+     contentContainerStyle: View.propTypes.style,
+
+    /**
+     * Style of the overlay view covering the whole screen.
+     * It is transparent by default.
+     */
+    fullscreenContainerStyle: View.propTypes.style,
+
+    /**
+     * Called when the area anywhere outside the contents is tapped
+     */
+    onRequestClose: React.PropTypes.func,
+  },
+
+  getDefaultProps: function(): Object {
+    return {
+      isOpen: false,
+    };
+  },
+
+  componentWillMount: function() {
+    this._tag = Portal.allocateTag();
+    if (this.props.isOpen) {
+      Portal.showModal(this._tag, this._createModal(this.props));
+    }
+  },
+
+  componentWillUnmount: function() {
+    Portal.closeModal(this._tag);
+  },
+
+  componentWillReceiveProps: function(newProps: Object) {
+    if (newProps.isOpen) {
+      // Even if already shown, showModal will re-render
+      // which is useful for updating the modal.
+      Portal.showModal(this._tag, this._createModal(newProps));
+    } else {
+      Portal.closeModal(this._tag);
+    }
+  },
+
+  _createModal: function(newProps: Object) {
+    var fullscreenContainerStyles = [
+      styles.fullscreenContainer,
+      this.props.fullscreenContainerStyle,
+    ];
+    var children = newProps.children;
+    // If there are multiple children we need to wrap them in a View.
+    // This is because Touchable needs a single child.
+    var hasMultipleChildren = ReactChildren.count(children) > 1;
+    var content = hasMultipleChildren ?
+      <View style={this.props.contentContainerStyle}>
+        {children}
+      </View> :
+      children;
+    return (
+      <TouchableWithoutFeedback key={this._tag} onPress={this.props.onRequestClose}>
+        <View style={fullscreenContainerStyles}>
+          <TouchableWithoutFeedback>
+            {content}
+          </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    );
+  },
+
+  render: function(): any {
+    return null;
+  }
+});
+
+var styles = StyleSheet.create({
+  fullscreenContainer: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+  },
+});
+
+module.exports = Modal;
